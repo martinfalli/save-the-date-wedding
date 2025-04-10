@@ -1,8 +1,7 @@
 {
   "name": "save-the-date",
   "version": "1.0.0",
-  "homepage": "https://martinfalli.github.io/save-the-date-wedding
-/",
+  "homepage": "https://martinfalli.github.io/save-the-date-wedding/",
   "scripts": {
     "dev": "vite --host",
     "start": "vite preview",

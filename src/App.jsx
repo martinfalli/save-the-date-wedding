@@ -15,6 +15,7 @@ function App() {
   const [showPopup, setShowPopup] = useState(false);
   const [isPopupClosing, setIsPopupClosing] = useState(false);
   const [graceAnimationKey, setGraceAnimationKey] = useState(0);
+  const [isImageTouched, setIsImageTouched] = useState(false);
   const { width, height } = useWindowSize();
 
   // Effect to toggle dark class on html element
@@ -88,6 +89,14 @@ function App() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleImageTouchStart = () => {
+    setIsImageTouched(true);
+  };
+
+  const handleImageTouchEnd = () => {
+    setIsImageTouched(false);
   };
 
   return (
@@ -244,10 +253,12 @@ function App() {
           <img 
             src={couplePhoto} 
             alt="Simona & Martin" 
-            className={`w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-pink-500 shadow-md transition-all duration-500 ease-in-out transform hover:scale-95 active:scale-90 cursor-pointer ${
+            className={`w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-pink-500 shadow-md transition-all duration-200 ease-in-out transform hover:scale-95 ${isImageTouched ? 'scale-90' : ''} cursor-pointer ${
               isDarkMode ? 'mb-12' : 'mb-8'
             }`}
             onClick={handlePhotoClick}
+            onTouchStart={handleImageTouchStart}
+            onTouchEnd={handleImageTouchEnd}
           />
 
           <h1 className="font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap text-pink-500 transition-all duration-500 ease-in-out">
