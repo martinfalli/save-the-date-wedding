@@ -234,7 +234,7 @@ function App() {
         {/* Language Toggle Button */}
         <button
           onClick={toggleLanguage}
-          className="absolute top-4 right-4 p-2 rounded-full text-xl hover:bg-pink-100 dark:hover:bg-pink-900/30 transition-colors duration-300"
+          className="absolute top-4 right-4 p-2 rounded-full text-xl transform active:scale-95 bg-pink-100 dark:bg-pink-900/30 transition-all duration-200"
           aria-label={language === 'en' ? 'Switch to Bulgarian' : 'Switch to English'}
         >
           {language === 'en' ? '🇧🇬' : '🇺🇸'}
@@ -244,7 +244,7 @@ function App() {
           <img 
             src={couplePhoto} 
             alt="Simona & Martin" 
-            className={`w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-pink-500 shadow-md transition-all duration-500 ease-in-out transform hover:scale-95 cursor-pointer ${
+            className={`w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-pink-500 shadow-md transition-all duration-500 ease-in-out transform hover:scale-95 active:scale-90 cursor-pointer ${
               isDarkMode ? 'mb-12' : 'mb-8'
             }`}
             onClick={handlePhotoClick}
