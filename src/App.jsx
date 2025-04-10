@@ -250,16 +250,14 @@ function App() {
         </button>
         
         <div className="flex flex-col items-center justify-center h-full transition-all duration-500 ease-in-out">
-          <img 
-            src={couplePhoto} 
-            alt="Simona & Martin" 
-            className={`w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-pink-500 shadow-md transition-transform duration-200 ease-in-out transform hover:scale-95 ${isImageTouched ? 'scale-90' : 'scale-100'} cursor-pointer select-none ${
-              isDarkMode ? 'mb-12' : 'mb-8'
-            }`}
+          <div
             onClick={handlePhotoClick}
             onTouchStart={handleImageTouchStart}
             onTouchEnd={handleImageTouchEnd}
-            style={{ WebkitUserDrag: 'none', WebkitTouchCallout: 'none' }}
+            className={`w-48 h-48 md:w-56 md:h-56 rounded-full border-4 border-pink-500 shadow-md transition-transform duration-200 ease-in-out transform hover:scale-95 ${isImageTouched ? 'scale-90' : 'scale-100'} cursor-pointer bg-cover bg-center box-border aspect-square ${ 
+              isDarkMode ? 'mb-12' : 'mb-8'
+            }`}
+            style={{ backgroundImage: `url(${couplePhoto})` }}
           />
 
           <h1 className="font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap text-pink-500 transition-all duration-500 ease-in-out">
