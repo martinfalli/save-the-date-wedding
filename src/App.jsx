@@ -98,12 +98,26 @@ function App() {
         <div className={`absolute inset-0 transition-colors duration-500 ${
           isDarkMode 
             ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
-            : 'bg-gradient-to-br from-pink-200 via-pink-50 to-pink-100'
+            : 'bg-gradient-to-br from-pink-300 via-pink-100 to-pink-200'
         }`}></div>
 
         {/* Subtle gradient overlay - only visible in dark mode */}
         {isDarkMode && (
           <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-pink-900/20"></div>
+        )}
+
+        {/* Disco Lights - only visible in dark mode */}
+        {isDarkMode && (
+          <div className="absolute inset-0 overflow-hidden blur-3xl opacity-50">
+            {/* Top Left */}
+            <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-pink-500 rounded-full animate-spin-slow animate-pulse-subtle animation-delay-500"></div>
+            {/* Top Right */}
+            <div className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 bg-purple-500 rounded-full animate-spin-slow animate-pulse-subtle animation-delay-1500"></div>
+            {/* Bottom Left */}
+            <div className="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 bg-blue-500 rounded-full animate-spin-slow animate-pulse-subtle animation-delay-1000"></div>
+            {/* Bottom Right */}
+            <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-teal-500 rounded-full animate-spin-slow animate-pulse-subtle animation-delay-2000"></div>
+          </div>
         )}
 
         {showConfetti && (
@@ -128,7 +142,7 @@ function App() {
              <img 
                src={graceImage} 
                alt="Grace" 
-               className="w-16 h-16 object-contain absolute left-[10%] -translate-x-1/2 animate-fall-grace-slow"
+               className="w-16 h-16 object-contain absolute left-[10%] -translate-x-1/2 animate-fall-grace-slow-reverse"
              />
              <img 
                src={graceImage} 
@@ -138,7 +152,7 @@ function App() {
              <img 
                src={graceImage} 
                alt="Grace" 
-               className="w-16 h-16 object-contain absolute left-[50%] -translate-x-1/2 animate-fall-grace"
+               className="w-16 h-16 object-contain absolute left-[50%] -translate-x-1/2 animate-fall-grace-reverse"
              />
              <img 
                src={graceImage} 
@@ -148,7 +162,7 @@ function App() {
              <img 
                src={graceImage} 
                alt="Grace" 
-               className="w-16 h-16 object-contain absolute left-[90%] -translate-x-1/2 animate-fall-grace-slow"
+               className="w-16 h-16 object-contain absolute left-[90%] -translate-x-1/2 animate-fall-grace-slow-reverse"
              />
 
              {/* Row 2 */}
@@ -160,7 +174,7 @@ function App() {
              <img 
                src={graceImage} 
                alt="Grace" 
-               className="w-16 h-16 object-contain absolute left-[40%] -translate-x-1/2 animate-fall-grace-slow"
+               className="w-16 h-16 object-contain absolute left-[40%] -translate-x-1/2 animate-fall-grace-slow-reverse"
              />
              <img 
                src={graceImage} 
@@ -170,14 +184,14 @@ function App() {
              <img 
                src={graceImage} 
                alt="Grace" 
-               className="w-16 h-16 object-contain absolute left-[80%] -translate-x-1/2 animate-fall-grace-slow"
+               className="w-16 h-16 object-contain absolute left-[80%] -translate-x-1/2 animate-fall-grace-slow-reverse"
              />
 
              {/* Row 3 */}
              <img 
                src={graceImage} 
                alt="Grace" 
-               className="w-16 h-16 object-contain absolute left-[15%] -translate-x-1/2 animate-fall-grace-medium delay-2500"
+               className="w-16 h-16 object-contain absolute left-[15%] -translate-x-1/2 animate-fall-grace-medium-reverse delay-2500"
              />
              <img 
                src={graceImage} 
@@ -187,7 +201,7 @@ function App() {
              <img 
                src={graceImage} 
                alt="Grace" 
-               className="w-16 h-16 object-contain absolute left-[65%] -translate-x-1/2 animate-fall-grace delay-3000"
+               className="w-16 h-16 object-contain absolute left-[65%] -translate-x-1/2 animate-fall-grace-reverse delay-3000"
              />
              <img 
                src={graceImage} 
@@ -214,13 +228,13 @@ function App() {
       {/* Main content */}
       <div className={`rounded-lg shadow-lg text-center w-full mx-auto relative z-10 transition-all duration-500 ease-in-out border ${
         isDarkMode 
-          ? 'h-[600px] bg-gray-800/90 border-gray-700 max-w-2xl p-6 md:p-12 lg:p-12' 
-          : 'h-[450px] bg-white border-gray-200 max-w-xl py-12 md:py-16 lg:py-16 px-6 md:px-12 lg:px-12'
+          ? 'h-[540px] md:h-[600px] bg-gray-800/90 border-gray-700 max-w-2xl p-6 md:p-12 lg:p-12' 
+          : 'h-[450px] md:h-[495px] bg-white/90 border-gray-200 max-w-xl py-12 md:py-16 lg:py-16 px-6 md:px-12 lg:px-12'
       }`}>
         {/* Language Toggle Button */}
         <button
           onClick={toggleLanguage}
-          className="absolute top-4 right-4 p-2 rounded-full hover:bg-pink-100 dark:hover:bg-pink-900/30 transition-colors duration-300"
+          className="absolute top-4 right-4 p-2 rounded-full text-xl hover:bg-pink-100 dark:hover:bg-pink-900/30 transition-colors duration-300"
           aria-label={language === 'en' ? 'Switch to Bulgarian' : 'Switch to English'}
         >
           {language === 'en' ? '🇧🇬' : '🇺🇸'}
@@ -243,7 +257,12 @@ function App() {
           {!isDateRevealed ? (
             <button
               onClick={revealDate}
-              className="bg-pink-500 text-white font-bold py-3 px-6 rounded-full hover:bg-opacity-90 transition-all duration-500 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 shadow-lg"
+              className="text-white font-bold py-3 px-6 rounded-full 
+                         mt-4 md:mt-2
+                         bg-gradient-to-br from-pink-400 to-pink-500 
+                         hover:from-pink-500 hover:to-pink-600 
+                         transition-all duration-500 ease-in-out transform hover:scale-105 
+                         focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 shadow-lg"
             >
               {language === 'en' ? 'Save the Date' : 'Запази Датата'}
             </button>
@@ -264,7 +283,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="hover:underline"
                 >
-                  {language === 'en' ? 'Pasarel Lake Club' : 'Пасарел Лейк Клъб'}
+                  {language === 'en' ? 'Pasarel Lake Club' : 'Пасарел Лейк Клуб'}
                 </a>
               </p>
               <p className={`text-sm md:text-base italic mt-4 transition-all duration-500 ease-in-out ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>

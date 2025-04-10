@@ -53,9 +53,33 @@ module.exports = {
           '0%': { top: '-100px', transform: 'translateX(-50%) rotate(0deg)' },
           '100%': { top: '100%', transform: 'translateX(-50%) rotate(540deg)' },
         },
+        fallReverse: {
+          '0%': { top: '-100px', transform: 'translateX(-50%) rotate(0deg)' },
+          '100%': { top: '100%', transform: 'translateX(-50%) rotate(-720deg)' },
+        },
+        fallSlowReverse: {
+          '0%': { top: '-100px', transform: 'translateX(-50%) rotate(0deg)' },
+          '100%': { top: '100%', transform: 'translateX(-50%) rotate(-720deg)' },
+        },
+        fallFastReverse: {
+          '0%': { top: '-100px', transform: 'translateX(-50%) rotate(0deg)' },
+          '100%': { top: '100%', transform: 'translateX(-50%) rotate(-180deg)' },
+        },
+        fallVerySlowReverse: {
+          '0%': { top: '-100px', transform: 'translateX(-50%) rotate(0deg)' },
+          '100%': { top: '100%', transform: 'translateX(-50%) rotate(-1080deg)' },
+        },
+        fallMediumReverse: {
+          '0%': { top: '-100px', transform: 'translateX(-50%) rotate(0deg)' },
+          '100%': { top: '100%', transform: 'translateX(-50%) rotate(-540deg)' },
+        },
         spinSlow: {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
+        },
+        pulseSubtle: {
+          '0%, 100%': { transform: 'scale(1)', opacity: 0.3 },
+          '50%': { transform: 'scale(1.1)', opacity: 0.4 },
         }
       },
       animation: {
@@ -67,8 +91,20 @@ module.exports = {
         'fall-grace-fast': 'fallFast 5.1s linear forwards',
         'fall-grace-very-slow': 'fallVerySlow 10.2s linear forwards',
         'fall-grace-medium': 'fallMedium 7.65s linear forwards',
-        'spin-slow': 'spinSlow 4s linear infinite',
+        'fall-grace-reverse': 'fallReverse 6.8s linear forwards',
+        'fall-grace-slow-reverse': 'fallSlowReverse 8.5s linear forwards',
+        'fall-grace-fast-reverse': 'fallFastReverse 5.1s linear forwards',
+        'fall-grace-very-slow-reverse': 'fallVerySlowReverse 10.2s linear forwards',
+        'fall-grace-medium-reverse': 'fallMediumReverse 7.65s linear forwards',
+        'spin-slow': 'spinSlow 15s linear infinite',
+        'pulse-subtle': 'pulseSubtle 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
+      animationDelay: {
+        '500': '500ms',
+        '1000': '1000ms',
+        '1500': '1500ms',
+        '2000': '2000ms',
+      }
     },
   },
   plugins: [],
