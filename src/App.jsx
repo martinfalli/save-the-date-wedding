@@ -244,7 +244,7 @@ function App() {
           <img 
             src={couplePhoto} 
             alt="Simona & Martin" 
-            className={`w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-pink-500 shadow-md transition-transform duration-200 ease-in-out transform active:scale-90 cursor-pointer ${
+            className={`w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-pink-500 shadow-md transition-transform duration-200 ease-in-out transform hover:scale-95 active:scale-90 cursor-pointer ${
               isDarkMode ? 'mb-12' : 'mb-8'
             }`}
             onClick={handlePhotoClick}
