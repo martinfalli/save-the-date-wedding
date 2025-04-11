@@ -218,7 +218,7 @@ function App() {
               isPopupClosing ? 'animate-fadeOutScale' : 'animate-fadeInScale'
             }`}>
               <p className="text-xl font-semibold text-gray-800 dark:text-white">
-                {language === 'en' ? 'More Grace? At the wedding :)' : 'Искате още Грейс - на сватбата :)'}
+                {language === 'en' ? 'More Grace? At the wedding! 😉' : 'Искате още Грейс - на сватбата! 😉'}
               </p>
             </div>
           </div>
@@ -234,7 +234,7 @@ function App() {
         {/* Language Toggle Button */}
         <button
           onClick={toggleLanguage}
-          className="absolute top-4 right-4 p-2 rounded-full text-xl transform active:scale-95 bg-pink-100 dark:bg-pink-900/30 transition-all duration-200"
+          className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full text-xl transform active:scale-95 bg-pink-100 dark:bg-pink-900/30 transition-all duration-200 z-20 lg:hover:opacity-80"
           aria-label={language === 'en' ? 'Switch to Bulgarian' : 'Switch to English'}
         >
           {language === 'en' ? '🇧🇬' : '🇺🇸'}
@@ -244,11 +244,16 @@ function App() {
           <img 
             src={couplePhoto} 
             alt="Simona & Martin" 
-            className={`w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-pink-500 shadow-md transition-all duration-500 ease-in-out transform hover:scale-95 active:scale-90 cursor-pointer ${
+            className={`w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-pink-500 shadow-md transition-all duration-500 ease-in-out transform active:scale-90 lg:hover:scale-95 cursor-pointer ${
               isDarkMode ? 'mb-12' : 'mb-8'
             }`}
             onClick={handlePhotoClick}
           />
+
+          {/* Subtitle */}
+          <p className="font-title-cursive text-2xl md:text-3xl lg:text-4xl mb-2 text-pink-500 transition-all duration-500 ease-in-out">
+            {language === 'en' ? 'The Wedding of' : 'Сватбата на'}
+          </p>
 
           <h1 className="font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap text-pink-500 transition-all duration-500 ease-in-out">
             {language === 'en' ? 'Simona & Martin' : 'Симона & Мартин'}
@@ -258,7 +263,7 @@ function App() {
             <button
               onClick={revealDate}
               className="text-white font-bold py-3 px-6 rounded-full 
-                         mt-4 md:mt-2
+                         mt-2 md:mt-0
                          bg-gradient-to-br from-pink-400 to-pink-500 
                          hover:from-pink-500 hover:to-pink-600 
                          transition-all duration-500 ease-in-out transform hover:scale-105 
@@ -267,7 +272,7 @@ function App() {
               {language === 'en' ? 'Save the Date' : 'Запази Датата'}
             </button>
           ) : (
-            <div className={`animate-fadeInScale space-y-3 transition-all duration-500 ease-in-out ${isDarkMode ? 'mt-8' : ''}`}>
+            <div className={`animate-fadeInScale space-y-3 transition-all duration-500 ease-in-out ${isDarkMode ? 'mt-4' : ''}`}>
               <p 
                 onClick={downloadCalendarInvite}
                 className={`text-xl md:text-2xl font-semibold transition-all duration-500 ease-in-out hover:opacity-80 cursor-pointer ${
