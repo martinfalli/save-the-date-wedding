@@ -97,27 +97,18 @@ function App() {
         {/* Background gradient */}
         <div className={`absolute inset-0 transition-colors duration-500 ${
           isDarkMode 
-            ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
-            : 'bg-gradient-to-br from-pink-300 via-pink-100 to-pink-200'
+            ? 'bg-gradient-to-br from-black via-black to-black'
+            : 'bg-[#f4ede3]'
         }`}></div>
+
+        {/* Subtle gradient overlay - only visible in light mode */}
+        {!isDarkMode && (
+          <div className="absolute inset-0 bg-gradient-to-br from-[#8a163a]/10 via-transparent to-[#8a163a]/10"></div>
+        )}
 
         {/* Subtle gradient overlay - only visible in dark mode */}
         {isDarkMode && (
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-pink-900/20"></div>
-        )}
-
-        {/* Disco Lights - only visible in dark mode */}
-        {isDarkMode && (
-          <div className="absolute inset-0 overflow-hidden blur-3xl opacity-50">
-            {/* Top Left */}
-            <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-pink-500 rounded-full animate-spin-slow animate-pulse-subtle animation-delay-500"></div>
-            {/* Top Right */}
-            <div className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 bg-purple-500 rounded-full animate-spin-slow animate-pulse-subtle animation-delay-1500"></div>
-            {/* Bottom Left */}
-            <div className="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 bg-blue-500 rounded-full animate-spin-slow animate-pulse-subtle animation-delay-1000"></div>
-            {/* Bottom Right */}
-            <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-teal-500 rounded-full animate-spin-slow animate-pulse-subtle animation-delay-2000"></div>
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#490b1e]/30 via-transparent to-[#490b1e]/30"></div>
         )}
 
         {showConfetti && (
@@ -223,18 +214,32 @@ function App() {
             </div>
           </div>
         )}
+
+        {/* Disco Lights - only visible in dark mode */}
+        {isDarkMode && (
+          <div className="absolute inset-0 overflow-hidden blur-3xl opacity-75">
+            {/* Top Left */}
+            <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-[#5d0e27] rounded-full animate-spin-slow animate-pulse-subtle animation-delay-500"></div>
+            {/* Top Right */}
+            <div className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 bg-[#5d0e27] rounded-full animate-spin-slow animate-pulse-subtle animation-delay-1500"></div>
+            {/* Bottom Left */}
+            <div className="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 bg-[#5d0e27] rounded-full animate-spin-slow animate-pulse-subtle animation-delay-1000"></div>
+            {/* Bottom Right */}
+            <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-[#5d0e27] rounded-full animate-spin-slow animate-pulse-subtle animation-delay-2000"></div>
+          </div>
+        )}
       </div>
       
       {/* Main content */}
       <div className={`rounded-lg shadow-lg text-center w-full mx-auto relative z-10 transition-all duration-500 ease-in-out border ${
         isDarkMode 
-          ? 'h-[540px] md:h-[600px] bg-gray-800/90 border-gray-700 max-w-2xl p-6 md:p-12 lg:p-12' 
-          : 'h-[450px] md:h-[495px] bg-white/90 border-gray-200 max-w-xl py-12 md:py-16 lg:py-16 px-6 md:px-12 lg:px-12'
+          ? 'h-[540px] md:h-[600px] bg-gradient-to-br from-[#370a18]/90 to-[#260610]/90 border-[#f5ede3] max-w-2xl p-6 md:p-12 lg:p-12'
+          : 'h-[450px] md:h-[495px] bg-gradient-to-br from-white/90 to-stone-100/90 border-stone-300 max-w-xl py-12 md:py-16 lg:py-16 px-6 md:px-12 lg:px-12'
       }`}>
         {/* Language Toggle Button */}
         <button
           onClick={toggleLanguage}
-          className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full text-xl transform active:scale-95 bg-pink-100 dark:bg-pink-900/30 transition-all duration-200 z-20 lg:hover:opacity-80"
+          className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full text-xl transform active:scale-95 bg-[#f4ede3] dark:bg-pink-900/30 transition-all duration-200 z-20 lg:hover:opacity-80"
           aria-label={language === 'en' ? 'Switch to Bulgarian' : 'Switch to English'}
         >
           {language === 'en' ? '🇧🇬' : '🇺🇸'}
@@ -244,18 +249,18 @@ function App() {
           <img 
             src={couplePhoto} 
             alt="Simona & Martin" 
-            className={`w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-pink-500 shadow-md transition-all duration-500 ease-in-out transform active:scale-90 lg:hover:scale-95 cursor-pointer ${
+            className={`w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-[#8a163a] dark:border-[#f5ede3] shadow-md transition-all duration-500 ease-in-out transform active:scale-90 lg:hover:scale-95 cursor-pointer ${
               isDarkMode ? 'mb-12' : 'mb-8'
             }`}
             onClick={handlePhotoClick}
           />
 
           {/* Subtitle */}
-          <p className="font-title-cursive text-2xl md:text-3xl lg:text-4xl mb-2 text-pink-500 transition-all duration-500 ease-in-out">
+          <p className="font-title-cursive text-2xl md:text-3xl lg:text-4xl mb-2 text-[#8a163a] dark:text-[#f5ede3] transition-all duration-500 ease-in-out">
             {language === 'en' ? 'The Wedding of' : 'Сватбата на'}
           </p>
 
-          <h1 className="font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap text-pink-500 transition-all duration-500 ease-in-out">
+          <h1 className="font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap text-[#8a163a] dark:text-[#f5ede3] transition-all duration-500 ease-in-out">
             {language === 'en' ? 'Simona & Martin' : 'Симона & Мартин'}
           </h1>
 
@@ -264,10 +269,10 @@ function App() {
               onClick={revealDate}
               className="text-white font-bold py-3 px-6 rounded-full 
                          mt-2 md:mt-0
-                         bg-gradient-to-br from-pink-400 to-pink-500 
-                         hover:from-pink-500 hover:to-pink-600 
+                         bg-gradient-to-br from-[#8a163a] to-[#5d0e27]
+                         hover:from-[#8a163a] hover:to-[#5d0e27]
                          transition-all duration-500 ease-in-out transform hover:scale-105 
-                         focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 shadow-lg"
+                         focus:outline-none focus:ring-2 focus:ring-[#8a163a] focus:ring-opacity-50 shadow-lg"
             >
               {language === 'en' ? 'Save the Date' : 'Запази Датата'}
             </button>
@@ -276,12 +281,12 @@ function App() {
               <p 
                 onClick={downloadCalendarInvite}
                 className={`text-xl md:text-2xl font-semibold transition-all duration-500 ease-in-out hover:opacity-80 cursor-pointer ${
-                  isDarkMode ? 'text-white' : 'text-gray-800'
+                  isDarkMode ? 'text-[#f6eee5]' : 'text-gray-800'
                 }`}
               >
                 {language === 'en' ? '10 July 2026' : '10 Юли 2026'}
               </p>
-              <p className={`text-lg md:text-xl transition-all duration-500 ease-in-out hover:opacity-80 ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+              <p className={`text-lg md:text-xl transition-all duration-500 ease-in-out hover:opacity-80 ${isDarkMode ? 'text-[#f6eee5]' : 'text-gray-800'}`}>
                 <a 
                   href="https://maps.app.goo.gl/6cpMAtGf2iUf2VXR6" 
                   target="_blank" 
@@ -291,7 +296,7 @@ function App() {
                   {language === 'en' ? 'Pasarel Lake Club' : 'Пасарел Лейк Клуб'}
                 </a>
               </p>
-              <p className={`text-sm md:text-base italic mt-4 transition-all duration-500 ease-in-out ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+              <p className={`text-sm md:text-base italic mt-4 transition-all duration-500 ease-in-out ${isDarkMode ? 'text-[#f6eee5]' : 'text-gray-800'}`}>
                 {language === 'en' ? '(Invitation to follow)' : '(Ще последва покана)'}
               </p>
             </div>
