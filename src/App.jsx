@@ -5,12 +5,13 @@ import useWindowSize from 'react-use/lib/useWindowSize';
 // Import local image
 import couplePhoto from '../images/IMG_3626.jpeg';
 import graceImage from '../images/grace.png';
+import graceGoldImage from '../images/grace_gold.png';
 
 function App() {
   const [isDateRevealed, setIsDateRevealed] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState('bg');
   const [graceClickCount, setGraceClickCount] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
   const [isPopupClosing, setIsPopupClosing] = useState(false);
@@ -132,71 +133,71 @@ function App() {
              {/* Render the images inside each container instance */}
              {/* Row 1 */}
              <img 
-               src={graceImage} 
+               src={isDarkMode ? graceGoldImage : graceImage} 
                alt="Grace" 
                className="w-16 h-16 object-contain absolute left-[10%] -translate-x-1/2 animate-fall-grace-slow-reverse"
              />
              <img 
-               src={graceImage} 
+               src={isDarkMode ? graceGoldImage : graceImage} 
                alt="Grace" 
                className="w-16 h-16 object-contain absolute left-[30%] -translate-x-1/2 animate-fall-grace-medium delay-1000"
              />
              <img 
-               src={graceImage} 
+               src={isDarkMode ? graceGoldImage : graceImage} 
                alt="Grace" 
                className="w-16 h-16 object-contain absolute left-[50%] -translate-x-1/2 animate-fall-grace-reverse"
              />
              <img 
-               src={graceImage} 
+               src={isDarkMode ? graceGoldImage : graceImage} 
                alt="Grace" 
                className="w-16 h-16 object-contain absolute left-[70%] -translate-x-1/2 animate-fall-grace-medium delay-1500"
              />
              <img 
-               src={graceImage} 
+               src={isDarkMode ? graceGoldImage : graceImage} 
                alt="Grace" 
                className="w-16 h-16 object-contain absolute left-[90%] -translate-x-1/2 animate-fall-grace-slow-reverse"
              />
 
              {/* Row 2 */}
              <img 
-               src={graceImage} 
+               src={isDarkMode ? graceGoldImage : graceImage} 
                alt="Grace" 
                className="w-16 h-16 object-contain absolute left-[20%] -translate-x-1/2 animate-fall-grace-very-slow delay-2000"
              />
              <img 
-               src={graceImage} 
+               src={isDarkMode ? graceGoldImage : graceImage} 
                alt="Grace" 
                className="w-16 h-16 object-contain absolute left-[40%] -translate-x-1/2 animate-fall-grace-slow-reverse"
              />
              <img 
-               src={graceImage} 
+               src={isDarkMode ? graceGoldImage : graceImage} 
                alt="Grace" 
                className="w-16 h-16 object-contain absolute left-[60%] -translate-x-1/2 animate-fall-grace-very-slow delay-500"
              />
              <img 
-               src={graceImage} 
+               src={isDarkMode ? graceGoldImage : graceImage} 
                alt="Grace" 
                className="w-16 h-16 object-contain absolute left-[80%] -translate-x-1/2 animate-fall-grace-slow-reverse"
              />
 
              {/* Row 3 */}
              <img 
-               src={graceImage} 
+               src={isDarkMode ? graceGoldImage : graceImage} 
                alt="Grace" 
                className="w-16 h-16 object-contain absolute left-[15%] -translate-x-1/2 animate-fall-grace-medium-reverse delay-2500"
              />
              <img 
-               src={graceImage} 
+               src={isDarkMode ? graceGoldImage : graceImage} 
                alt="Grace" 
                className="w-16 h-16 object-contain absolute left-[35%] -translate-x-1/2 animate-fall-grace"
              />
              <img 
-               src={graceImage} 
+               src={isDarkMode ? graceGoldImage : graceImage} 
                alt="Grace" 
                className="w-16 h-16 object-contain absolute left-[65%] -translate-x-1/2 animate-fall-grace-reverse delay-3000"
              />
              <img 
-               src={graceImage} 
+               src={isDarkMode ? graceGoldImage : graceImage} 
                alt="Grace" 
                className="w-16 h-16 object-contain absolute left-[85%] -translate-x-1/2 animate-fall-grace-medium"
              />
@@ -206,12 +207,22 @@ function App() {
         {/* Popup */}
         {showPopup && (
           <div className="fixed inset-0 flex items-center justify-center z-50">
-            <div className={`bg-white dark:bg-gray-800 rounded-lg p-6 shadow-xl transform transition-all duration-500 border border-transparent dark:border-gray-600 ${
+            {/* Wrapper for Gradient Border */} 
+            <div className={`relative transition-all duration-500 ease-in-out ${
+              isDarkMode ? 'dark:rounded-lg dark:p-[1px] dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52]' : ''
+            } ${
               isPopupClosing ? 'animate-fadeOutScale' : 'animate-fadeInScale'
             }`}>
-              <p className="text-xl font-semibold text-gray-800 dark:text-white">
-                {language === 'en' ? 'More Grace? At the wedding! 😉' : 'Искате още Грейс - на сватбата! 😉'}
-              </p>
+              {/* Inner container for background and content */}
+              <div className={`rounded-lg p-6 shadow-xl transform transition-colors duration-500 ${
+                isDarkMode 
+                  ? 'bg-gradient-to-br from-[#5a1629]/90 to-[#2f0a14]/90'
+                  : 'bg-white border border-gray-300' // Adjusted light mode for consistency
+              }`}>
+                <p className={`text-xl font-semibold transition-colors duration-500 ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-[#7a1330]'}`}>
+                  {language === 'en' ? 'More Grace? At the wedding! 😉' : 'Искате още Грейс - на сватбата! 😉'}
+                </p>
+              </div>
             </div>
           </div>
         )}
@@ -234,18 +245,18 @@ function App() {
       {/* Main content Wrapper for Gradient Border */}
       <div className={`relative z-10 transition-all duration-500 ease-in-out w-full ${
         isDarkMode 
-          ? 'dark:rounded-lg dark:p-[4px] dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] h-[540px] md:h-[600px] max-w-2xl' 
-          : 'h-[460px] md:h-[505px] max-w-xl'
+          ? 'dark:rounded-lg dark:p-[3px] dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] h-[540px] md:h-[600px] max-w-2xl' 
+          : 'h-[460px] md:h-[509px] max-w-xl'
       }`}>
         <div className={`rounded-lg shadow-lg text-center mx-auto transition-all duration-500 ease-in-out h-full ${
           isDarkMode 
-            ? 'bg-gradient-to-br from-[#370a18]/90 to-[#260610]/90 p-6 md:p-12 lg:p-12' 
+            ? 'bg-gradient-to-br from-[#5a1629] to-[#2f0a14] p-6 md:p-12 lg:p-12' 
             : 'bg-gradient-to-br from-white/90 to-stone-100/90 border border-stone-300 py-12 md:py-16 lg:py-16 px-6 md:px-12 lg:px-12'
         }`}>
           {/* Language Toggle Button */}
           <button
             onClick={toggleLanguage}
-            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full text-xl transform active:scale-95 bg-[#f4ede3] dark:bg-[#370a18]/50 transition-all duration-200 z-20 lg:hover:opacity-80"
+            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full text-xl transform active:scale-95 bg-[#f4ede3] dark:bg-[#370a18]/50 dark:border-none transition-all duration-200 z-20 lg:hover:opacity-80"
             aria-label={language === 'en' ? 'Switch to Bulgarian' : 'Switch to English'}
           >
             {language === 'en' ? '🇧🇬' : '🇺🇸'}
@@ -256,7 +267,7 @@ function App() {
             <div 
               className={`inline-block transition-all duration-500 ease-in-out transform active:scale-90 lg:hover:scale-95 cursor-pointer rounded-full shadow-md ${
                 isDarkMode 
-                  ? 'p-[5px] bg-gradient-to-br from-[#f2cf52] via-[#a68d33] to-[#f2cf52] mb-12' 
+                  ? 'p-[4px] bg-gradient-to-br from-[#f2cf52] via-[#a68d33] to-[#f2cf52] mb-10' 
                   : 'border-4 border-[#8a163a] mb-8'
               }`}
               onClick={handlePhotoClick}
@@ -273,7 +284,7 @@ function App() {
               {language === 'en' ? 'The Wedding of' : 'Сватбата на'}
             </p>
 
-            <h1 className={`font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap transition-all duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-2 dark:mb-2 md:dark:mb-4' : 'text-[#8a163a]'}`}>
+            <h1 className={`font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap transition-all duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-2 dark:mb-2 md:dark:mb-6' : 'text-[#8a163a]'}`}>
               {language === 'en' ? 'Simona & Martin' : 'Симона & Мартин'}
             </h1>
 
