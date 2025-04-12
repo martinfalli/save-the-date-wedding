@@ -97,7 +97,7 @@ function App() {
         {/* Background gradient */}
         <div className={`absolute inset-0 transition-colors duration-500 ${
           isDarkMode 
-            ? 'bg-gradient-to-br from-black via-black to-black'
+            ? 'bg-gradient-to-br from-[#1a0006] via-[#100004] to-[#1a0006]'
             : 'bg-[#f4ede3]'
         }`}></div>
 
@@ -121,13 +121,14 @@ function App() {
             wind={0.05}
             friction={0.99}
             opacity={0.8}
+            colors={['#FFD700', '#daa520', '#B8860B', '#F0E68C']}
             style={{ position: 'fixed' }}
           />
         )}
 
-        {/* Grace falling animation container - Rendered multiple times using key */} 
+        {/* Grace falling animation container - Rendered multiple times using key */}
         {[...Array(graceClickCount > 3 ? 3 : graceClickCount)].map((_, i) => (
-           <div key={i} className="absolute w-full h-full pointer-events-none">
+           <div key={i} className="absolute w-full h-full pointer-events-none z-10">
              {/* Render the images inside each container instance */}
              {/* Row 1 */}
              <img 
@@ -219,88 +220,101 @@ function App() {
         {isDarkMode && (
           <div className="absolute inset-0 overflow-hidden blur-3xl opacity-75">
             {/* Top Left */}
-            <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-[#5d0e27] rounded-full animate-spin-slow animate-pulse-subtle animation-delay-500"></div>
+            <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-[#3c1b1c] rounded-full animate-spin-slow animate-pulse-subtle animation-delay-500"></div>
             {/* Top Right */}
-            <div className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 bg-[#5d0e27] rounded-full animate-spin-slow animate-pulse-subtle animation-delay-1500"></div>
+            <div className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 bg-[#3c1b1c] rounded-full animate-spin-slow animate-pulse-subtle animation-delay-1500"></div>
             {/* Bottom Left */}
-            <div className="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 bg-[#5d0e27] rounded-full animate-spin-slow animate-pulse-subtle animation-delay-1000"></div>
+            <div className="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 bg-[#3c1b1c] rounded-full animate-spin-slow animate-pulse-subtle animation-delay-1000"></div>
             {/* Bottom Right */}
-            <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-[#5d0e27] rounded-full animate-spin-slow animate-pulse-subtle animation-delay-2000"></div>
+            <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-[#3c1b1c] rounded-full animate-spin-slow animate-pulse-subtle animation-delay-2000"></div>
           </div>
         )}
       </div>
       
-      {/* Main content */}
-      <div className={`rounded-lg shadow-lg text-center w-full mx-auto relative z-10 transition-all duration-500 ease-in-out border ${
+      {/* Main content Wrapper for Gradient Border */}
+      <div className={`relative z-10 transition-all duration-500 ease-in-out w-full ${
         isDarkMode 
-          ? 'h-[540px] md:h-[600px] bg-gradient-to-br from-[#370a18]/90 to-[#260610]/90 border-[#f5ede3] max-w-2xl p-6 md:p-12 lg:p-12'
-          : 'h-[450px] md:h-[495px] bg-gradient-to-br from-white/90 to-stone-100/90 border-stone-300 max-w-xl py-12 md:py-16 lg:py-16 px-6 md:px-12 lg:px-12'
+          ? 'dark:rounded-lg dark:p-[4px] dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] h-[540px] md:h-[600px] max-w-2xl' 
+          : 'h-[460px] md:h-[505px] max-w-xl'
       }`}>
-        {/* Language Toggle Button */}
-        <button
-          onClick={toggleLanguage}
-          className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full text-xl transform active:scale-95 bg-[#f4ede3] dark:bg-pink-900/30 transition-all duration-200 z-20 lg:hover:opacity-80"
-          aria-label={language === 'en' ? 'Switch to Bulgarian' : 'Switch to English'}
-        >
-          {language === 'en' ? '🇧🇬' : '🇺🇸'}
-        </button>
-        
-        <div className="flex flex-col items-center justify-center h-full transition-all duration-500 ease-in-out">
-          <img 
-            src={couplePhoto} 
-            alt="Simona & Martin" 
-            className={`w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-[#8a163a] dark:border-[#f5ede3] shadow-md transition-all duration-500 ease-in-out transform active:scale-90 lg:hover:scale-95 cursor-pointer ${
-              isDarkMode ? 'mb-12' : 'mb-8'
-            }`}
-            onClick={handlePhotoClick}
-          />
-
-          {/* Subtitle */}
-          <p className="font-title-cursive text-2xl md:text-3xl lg:text-4xl mb-2 text-[#8a163a] dark:text-[#f5ede3] transition-all duration-500 ease-in-out">
-            {language === 'en' ? 'The Wedding of' : 'Сватбата на'}
-          </p>
-
-          <h1 className="font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap text-[#8a163a] dark:text-[#f5ede3] transition-all duration-500 ease-in-out">
-            {language === 'en' ? 'Simona & Martin' : 'Симона & Мартин'}
-          </h1>
-
-          {!isDateRevealed ? (
-            <button
-              onClick={revealDate}
-              className="text-white font-bold py-3 px-6 rounded-full 
-                         mt-2 md:mt-0
-                         bg-gradient-to-br from-[#8a163a] to-[#5d0e27]
-                         hover:from-[#8a163a] hover:to-[#5d0e27]
-                         transition-all duration-500 ease-in-out transform hover:scale-105 
-                         focus:outline-none focus:ring-2 focus:ring-[#8a163a] focus:ring-opacity-50 shadow-lg"
+        <div className={`rounded-lg shadow-lg text-center mx-auto transition-all duration-500 ease-in-out h-full ${
+          isDarkMode 
+            ? 'bg-gradient-to-br from-[#370a18]/90 to-[#260610]/90 p-6 md:p-12 lg:p-12' 
+            : 'bg-gradient-to-br from-white/90 to-stone-100/90 border border-stone-300 py-12 md:py-16 lg:py-16 px-6 md:px-12 lg:px-12'
+        }`}>
+          {/* Language Toggle Button */}
+          <button
+            onClick={toggleLanguage}
+            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full text-xl transform active:scale-95 bg-[#f4ede3] dark:bg-[#370a18]/50 transition-all duration-200 z-20 lg:hover:opacity-80"
+            aria-label={language === 'en' ? 'Switch to Bulgarian' : 'Switch to English'}
+          >
+            {language === 'en' ? '🇧🇬' : '🇺🇸'}
+          </button>
+          
+          <div className="flex flex-col items-center justify-center h-full transition-all duration-500 ease-in-out">
+            {/* Wrapper for Gradient/Solid Border */}
+            <div 
+              className={`inline-block transition-all duration-500 ease-in-out transform active:scale-90 lg:hover:scale-95 cursor-pointer rounded-full shadow-md ${
+                isDarkMode 
+                  ? 'p-[5px] bg-gradient-to-br from-[#f2cf52] via-[#a68d33] to-[#f2cf52] mb-12' 
+                  : 'border-4 border-[#8a163a] mb-8'
+              }`}
+              onClick={handlePhotoClick}
             >
-              {language === 'en' ? 'Save the Date' : 'Запази Датата'}
-            </button>
-          ) : (
-            <div className={`animate-fadeInScale space-y-3 transition-all duration-500 ease-in-out ${isDarkMode ? 'mt-4' : ''}`}>
-              <p 
-                onClick={downloadCalendarInvite}
-                className={`text-xl md:text-2xl font-semibold transition-all duration-500 ease-in-out hover:opacity-80 cursor-pointer ${
-                  isDarkMode ? 'text-[#f6eee5]' : 'text-gray-800'
-                }`}
-              >
-                {language === 'en' ? '10 July 2026' : '10 Юли 2026'}
-              </p>
-              <p className={`text-lg md:text-xl transition-all duration-500 ease-in-out hover:opacity-80 ${isDarkMode ? 'text-[#f6eee5]' : 'text-gray-800'}`}>
-                <a 
-                  href="https://maps.app.goo.gl/6cpMAtGf2iUf2VXR6" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hover:underline"
-                >
-                  {language === 'en' ? 'Pasarel Lake Club' : 'Пасарел Лейк Клуб'}
-                </a>
-              </p>
-              <p className={`text-sm md:text-base italic mt-4 transition-all duration-500 ease-in-out ${isDarkMode ? 'text-[#f6eee5]' : 'text-gray-800'}`}>
-                {language === 'en' ? '(Invitation to follow)' : '(Ще последва покана)'}
-              </p>
+              <img 
+                src={couplePhoto} 
+                alt="Simona & Martin" 
+                className={`block w-48 h-48 md:w-56 md:h-56 rounded-full object-cover`} 
+              />
             </div>
-          )}
+
+            {/* Subtitle */}
+            <p className={`font-title-cursive text-2xl md:text-3xl lg:text-4xl mb-2 transition-all duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-1' : 'text-[#8a163a]'}`}>
+              {language === 'en' ? 'The Wedding of' : 'Сватбата на'}
+            </p>
+
+            <h1 className={`font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap transition-all duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-2 dark:mb-2 md:dark:mb-4' : 'text-[#8a163a]'}`}>
+              {language === 'en' ? 'Simona & Martin' : 'Симона & Мартин'}
+            </h1>
+
+            {!isDateRevealed ? (
+              <button
+                onClick={revealDate}
+                className="text-white font-bold py-3 px-6 rounded-full 
+                           mt-2 md:mt-0
+                           bg-gradient-to-br from-[#8a163a] to-[#5d0e27]
+                           hover:from-[#8a163a] hover:to-[#5d0e27]
+                           transition-all duration-500 ease-in-out transform hover:scale-105 
+                           focus:outline-none focus:ring-2 focus:ring-[#8a163a] focus:ring-opacity-50 shadow-lg"
+              >
+                {language === 'en' ? 'Save the Date' : 'Запази Датата'}
+              </button>
+            ) : (
+              <div className={`animate-fadeInScale space-y-3 transition-all duration-500 ease-in-out ${isDarkMode ? 'mt-4' : ''} md:-mt-[0.125rem]`}>
+                <p 
+                  onClick={downloadCalendarInvite}
+                  className={`text-xl md:text-2xl font-semibold transition-all duration-500 ease-in-out hover:opacity-80 cursor-pointer ${
+                    isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-gray-800'
+                  }`}
+                >
+                  {language === 'en' ? '10 July 2026' : '10 Юли 2026'}
+                </p>
+                <p className={`text-lg md:text-xl transition-all duration-500 ease-in-out hover:opacity-80 ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-gray-800'}`}>
+                  <a 
+                    href="https://maps.app.goo.gl/6cpMAtGf2iUf2VXR6" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                  >
+                    {language === 'en' ? 'Pasarel Lake Club' : 'Пасарел Лейк Клуб'}
+                  </a>
+                </p>
+                <p className={`text-sm md:text-base italic mt-4 transition-all duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-gray-800'}`}>
+                  {language === 'en' ? '(Invitation to follow)' : '(Ще последва покана)'}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
