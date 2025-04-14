@@ -245,13 +245,13 @@ function App() {
       {/* Main content Wrapper for Gradient Border */}
       <div className={`relative z-10 transition-all duration-500 ease-in-out w-full ${
         isDarkMode 
-          ? 'dark:rounded-lg dark:p-[3px] dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] h-[540px] md:h-[600px] max-w-2xl' 
+          ? 'dark:rounded-lg h-[540px] md:h-[600px] max-w-2xl' 
           : 'h-[460px] md:h-[509px] max-w-xl'
       }`}>
         <div className={`rounded-lg shadow-lg text-center mx-auto transition-all duration-500 ease-in-out h-full ${
-          isDarkMode 
-            ? 'bg-gradient-to-br from-[#5a1629] to-[#2f0a14] p-6 md:p-12 lg:p-12' 
-            : 'bg-gradient-to-br from-white/90 to-stone-100/90 border border-stone-300 py-12 md:py-16 lg:py-16 px-6 md:px-12 lg:px-12'
+          isDarkMode
+            ? 'bg-gradient-to-br from-[#4a1123] to-[#1f060e] p-6 md:p-12 lg:p-12'
+            : 'bg-gradient-to-br from-white/90 to-stone-100/90 py-12 md:py-16 lg:py-16 px-6 md:px-12 lg:px-12'
         }`}>
           {/* Language Toggle Button */}
           <button
@@ -332,4 +332,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;
