@@ -256,7 +256,7 @@ function App() {
           {/* Language Toggle Button */}
           <button
             onClick={toggleLanguage}
-            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full text-xl transform active:scale-95 bg-[#f4ede3] dark:bg-[#370a18]/50 dark:border-none transition-all duration-200 z-20 lg:hover:opacity-80"
+            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full text-xl transform active:scale-95 bg-[#f4ede3] dark:bg-[#1f060e] dark:border-none transition-all duration-200 z-20 lg:hover:opacity-80"
             aria-label={language === 'en' ? 'Switch to Bulgarian' : 'Switch to English'}
           >
             {language === 'en' ? '🇧🇬' : '🇺🇸'}
