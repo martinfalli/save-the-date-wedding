@@ -315,16 +315,16 @@ function App() {
                 </span>
               </button>
             ) : (
-              <div className={`animate-fadeInScale space-y-3 transition-colors duration-500 ease-in-out ${isDarkMode ? 'mt-4' : ''} md:-mt-[0.125rem] ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}>
+              <div className={`animate-fadeInScale space-y-3 transition-colors duration-500 ease-in-out ${isDarkMode ? 'mt-4' : ''} md:-mt-[0.125rem]`}>
                 <p 
                   onClick={downloadCalendarInvite}
                   className={`text-xl md:text-2xl font-semibold transition-colors duration-500 ease-in-out hover:opacity-80 cursor-pointer ${
                     isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-gray-800'
-                  }`}
+                  } ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}
                 >
                   {language === 'en' ? '10 July 2026' : '10 Юли 2026'}
                 </p>
-                <p className={`text-lg md:text-xl transition-colors duration-500 ease-in-out hover:opacity-80 ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-gray-800'}`}>
+                <p className={`text-lg md:text-xl transition-colors duration-500 ease-in-out hover:opacity-80 ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-gray-800'} ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}>
                   <a 
                     href="https://maps.app.goo.gl/6cpMAtGf2iUf2VXR6" 
                     target="_blank" 
@@ -334,7 +334,7 @@ function App() {
                     {language === 'en' ? 'Pasarel Lake Club' : 'Пасарел Лейк Клуб'}
                   </a>
                 </p>
-                <p className={`text-sm md:text-base italic mt-4 transition-colors duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-gray-800'}`}>
+                <p className={`text-sm md:text-base italic mt-4 transition-colors duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-gray-800'} ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}>
                   {language === 'en' ? '(Invitation to follow)' : '(Ще последва покана)'}
                 </p>
               </div>
