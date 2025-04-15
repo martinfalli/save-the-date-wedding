@@ -271,7 +271,9 @@ function App() {
             aria-label={language === 'en' ? 'Switch to Bulgarian' : 'Switch to English'}
             disabled={isTextAnimating}
           >
-            {language === 'en' ? '🇧🇬' : '🇺🇸'}
+            <span className={`${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'} inline-block`}>
+              {language === 'en' ? '🇧🇬' : '🇺🇸'}
+            </span>
           </button>
           
           <div className="flex flex-col items-center justify-center h-full transition-all duration-500 ease-in-out">
@@ -307,7 +309,7 @@ function App() {
                            mt-2 md:mt-0
                            bg-gradient-to-br from-[#8a163a] to-[#5d0e27]
                            hover:from-[#8a163a] hover:to-[#5d0e27]
-                           transition-all duration-500 ease-in-out transform hover:scale-105 
+                           transition-all transition-width duration-500 ease-in-out transform hover:scale-105 
                            focus:outline-none focus:ring-2 focus:ring-[#8a163a] focus:ring-opacity-50 shadow-lg`}
               >
                 <span className={`${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'} inline-block`}>
