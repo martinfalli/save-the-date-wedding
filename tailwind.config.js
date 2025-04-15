@@ -80,6 +80,14 @@ module.exports = {
         pulseSubtle: {
           '0%, 100%': { transform: 'scale(1)', opacity: 0.3 },
           '50%': { transform: 'scale(1.1)', opacity: 0.4 },
+        },
+        fadeTextOut: {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+        fadeTextIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         }
       },
       animation: {
@@ -98,6 +106,8 @@ module.exports = {
         'fall-grace-medium-reverse': 'fallMediumReverse 7.65s linear forwards',
         'spin-slow': 'spinSlow 15s linear infinite',
         'pulse-subtle': 'pulseSubtle 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'fade-text-out': 'fadeTextOut 0.3s ease-out forwards',
+        'fade-text-in': 'fadeTextIn 0.3s ease-out forwards',
       },
       animationDelay: {
         '500': '500ms',

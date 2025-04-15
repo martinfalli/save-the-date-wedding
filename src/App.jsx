@@ -16,6 +16,7 @@ function App() {
   const [showPopup, setShowPopup] = useState(false);
   const [isPopupClosing, setIsPopupClosing] = useState(false);
   const [graceAnimationKey, setGraceAnimationKey] = useState(0);
+  const [isTextAnimating, setIsTextAnimating] = useState(false);
   const { width, height } = useWindowSize();
 
   // Effect to toggle dark class on html element
@@ -56,7 +57,11 @@ function App() {
   };
 
   const toggleLanguage = () => {
-    setLanguage(prevLang => prevLang === 'en' ? 'bg' : 'en');
+    setIsTextAnimating(true);
+    setTimeout(() => {
+      setLanguage(prevLang => prevLang === 'en' ? 'bg' : 'en');
+      setIsTextAnimating(false);
+    }, 300);
   };
 
   const downloadCalendarInvite = () => {
@@ -207,20 +212,26 @@ function App() {
         {/* Popup */}
         {showPopup && (
           <div className="fixed inset-0 flex items-center justify-center z-50">
-            {/* Wrapper for Gradient Border */} 
-            <div className={`relative transition-all duration-500 ease-in-out ${
-              isDarkMode ? 'dark:rounded-lg dark:p-[1px] dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52]' : ''
-            } ${
+            {/* Wrapper for Gradient Border - Removing gradient border in dark mode */}
+            <div className={`relative transition-all duration-500 ease-in-out ${isDarkMode ? 'dark:rounded-lg' : ''} ${
               isPopupClosing ? 'animate-fadeOutScale' : 'animate-fadeInScale'
             }`}>
               {/* Inner container for background and content */}
               <div className={`rounded-lg p-6 shadow-xl transform transition-colors duration-500 ${
                 isDarkMode 
-                  ? 'bg-gradient-to-br from-[#5a1629]/90 to-[#2f0a14]/90'
-                  : 'bg-white border border-gray-300' // Adjusted light mode for consistency
+                  ? 'bg-[#1f060e]' /* Match emoji button dark bg */
+                  : 'bg-white' /* Remove light mode border */
               }`}>
-                <p className={`text-xl font-semibold transition-colors duration-500 ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-[#7a1330]'}`}>
-                  {language === 'en' ? 'More Grace? At the wedding! 😉' : 'Искате още Грейс - на сватбата! 😉'}
+                <p className={`text-xl font-semibold transition-colors duration-500 ${isDarkMode ? '' : 'text-[#7a1330]'}`}>
+                  {isDarkMode ? (
+                    <span className="dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent">
+                      {language === 'en' ? 'More Grace? At the wedding!' : 'Искате още Грейс - на сватбата!'}
+                    </span>
+                  ) : (
+                    language === 'en' ? 'More Grace? At the wedding!' : 'Искате още Грейс - на сватбата!'
+                  )}
+                  {' '}{/* Add space before emoji */}
+                  <span className={isDarkMode ? 'text-xl' : ''}>😉</span> {/* Emoji outside the gradient span */}
                 </p>
               </div>
             </div>
@@ -258,6 +269,7 @@ function App() {
             onClick={toggleLanguage}
             className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full text-xl transform active:scale-95 bg-[#f4ede3] dark:bg-[#1f060e] dark:border-none transition-all duration-200 z-20 lg:hover:opacity-80"
             aria-label={language === 'en' ? 'Switch to Bulgarian' : 'Switch to English'}
+            disabled={isTextAnimating}
           >
             {language === 'en' ? '🇧🇬' : '🇺🇸'}
           </button>
@@ -280,37 +292,39 @@ function App() {
             </div>
 
             {/* Subtitle */}
-            <p className={`font-title-cursive text-2xl md:text-3xl lg:text-4xl mb-2 transition-all duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-1' : 'text-[#8a163a]'}`}>
+            <p className={`font-title-cursive text-2xl md:text-3xl lg:text-4xl mb-2 transition-colors duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-1' : 'text-[#8a163a]'} ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}>
               {language === 'en' ? 'The Wedding of' : 'Сватбата на'}
             </p>
 
-            <h1 className={`font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap transition-all duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-2 dark:mb-2 md:dark:mb-6' : 'text-[#8a163a]'}`}>
+            <h1 className={`font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap transition-colors duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-2 dark:mb-2 md:dark:mb-6' : 'text-[#8a163a]'} ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}>
               {language === 'en' ? 'Simona & Martin' : 'Симона & Мартин'}
             </h1>
 
             {!isDateRevealed ? (
               <button
                 onClick={revealDate}
-                className="text-white font-bold py-3 px-6 rounded-full 
+                className={`text-white font-bold py-3 px-6 rounded-full 
                            mt-2 md:mt-0
                            bg-gradient-to-br from-[#8a163a] to-[#5d0e27]
                            hover:from-[#8a163a] hover:to-[#5d0e27]
                            transition-all duration-500 ease-in-out transform hover:scale-105 
-                           focus:outline-none focus:ring-2 focus:ring-[#8a163a] focus:ring-opacity-50 shadow-lg"
+                           focus:outline-none focus:ring-2 focus:ring-[#8a163a] focus:ring-opacity-50 shadow-lg`}
               >
-                {language === 'en' ? 'Save the Date' : 'Запази Датата'}
+                <span className={`${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'} inline-block`}>
+                  {language === 'en' ? 'Save the Date' : 'Запази Датата'}
+                </span>
               </button>
             ) : (
-              <div className={`animate-fadeInScale space-y-3 transition-all duration-500 ease-in-out ${isDarkMode ? 'mt-4' : ''} md:-mt-[0.125rem]`}>
+              <div className={`animate-fadeInScale space-y-3 transition-colors duration-500 ease-in-out ${isDarkMode ? 'mt-4' : ''} md:-mt-[0.125rem] ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}>
                 <p 
                   onClick={downloadCalendarInvite}
-                  className={`text-xl md:text-2xl font-semibold transition-all duration-500 ease-in-out hover:opacity-80 cursor-pointer ${
+                  className={`text-xl md:text-2xl font-semibold transition-colors duration-500 ease-in-out hover:opacity-80 cursor-pointer ${
                     isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-gray-800'
                   }`}
                 >
                   {language === 'en' ? '10 July 2026' : '10 Юли 2026'}
                 </p>
-                <p className={`text-lg md:text-xl transition-all duration-500 ease-in-out hover:opacity-80 ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-gray-800'}`}>
+                <p className={`text-lg md:text-xl transition-colors duration-500 ease-in-out hover:opacity-80 ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-gray-800'}`}>
                   <a 
                     href="https://maps.app.goo.gl/6cpMAtGf2iUf2VXR6" 
                     target="_blank" 
@@ -320,7 +334,7 @@ function App() {
                     {language === 'en' ? 'Pasarel Lake Club' : 'Пасарел Лейк Клуб'}
                   </a>
                 </p>
-                <p className={`text-sm md:text-base italic mt-4 transition-all duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-gray-800'}`}>
+                <p className={`text-sm md:text-base italic mt-4 transition-colors duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent' : 'text-gray-800'}`}>
                   {language === 'en' ? '(Invitation to follow)' : '(Ще последва покана)'}
                 </p>
               </div>
