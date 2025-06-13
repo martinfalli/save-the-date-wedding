@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Confetti from 'react-confetti';
 import useWindowSize from 'react-use/lib/useWindowSize';
+import { Analytics } from '@vercel/analytics/react';
 
 // Import local image
 import couplePhoto from '../images/IMG_3626.jpeg';
@@ -344,6 +345,7 @@ function App() {
           </div>
         </div>
       </div>
+      <Analytics />
     </div>
   );
 }
