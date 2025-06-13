@@ -1,14 +1,11 @@
 {
   "name": "save-the-date",
   "version": "1.0.0",
-  "homepage": "https://martinfalli.github.io/save-the-date-wedding/",
   "scripts": {
     "dev": "vite --host",
     "start": "vite preview",
     "build": "vite build",
-    "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@fontsource/pattaya": "^5.2.5",
@@ -20,7 +17,6 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
-    "gh-pages": "^6.1.1",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
     "vite": "^4.5.0"
