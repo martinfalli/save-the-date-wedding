@@ -20,6 +20,11 @@ function App() {
   const [isTextAnimating, setIsTextAnimating] = useState(false);
   const [isPhotoPressed, setIsPhotoPressed] = useState(false);
   const [isButtonPressed, setIsButtonPressed] = useState(false);
+  const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
+  const [touchOffset, setTouchOffset] = useState({ x: 0, y: 0 });
+  const [isFlicking, setIsFlicking] = useState(false);
+  const [lastTouchTime, setLastTouchTime] = useState(0);
+  const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   const { width, height } = useWindowSize();
 
   // Effect to toggle dark class on html element and update theme color
@@ -105,6 +110,77 @@ function App() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  // Touch handlers for flick animation
+  const handleTouchStart = (e) => {
+    const touch = e.touches[0];
+    setTouchStart({ x: touch.clientX, y: touch.clientY });
+    setLastTouchTime(Date.now());
+    setIsFlicking(false);
+  };
+
+  const handleTouchMove = (e) => {
+    if (isFlicking) return;
+    
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - touchStart.x;
+    const deltaY = touch.clientY - touchStart.y;
+    
+    // Calculate velocity
+    const now = Date.now();
+    const timeDelta = now - lastTouchTime;
+    if (timeDelta > 0) {
+      setVelocity({
+        x: deltaX / timeDelta,
+        y: deltaY / timeDelta
+      });
+    }
+    setLastTouchTime(now);
+    
+    setTouchOffset({ x: deltaX, y: deltaY });
+    e.preventDefault();
+  };
+
+  const handleTouchEnd = () => {
+    setIsFlicking(true);
+    
+    // Add momentum and spring back animation
+    let currentOffset = { ...touchOffset };
+    const friction = 0.95;
+    let currentVelocity = { x: velocity.x * 20, y: velocity.y * 20 };
+    
+    const animate = () => {
+      // Apply momentum
+      currentOffset.x += currentVelocity.x;
+      currentOffset.y += currentVelocity.y;
+      
+      // Apply friction
+      currentVelocity.x *= friction;
+      currentVelocity.y *= friction;
+      
+      // Spring back to center
+      const springStrength = 0.05;
+      const dampening = 0.8;
+      currentOffset.x *= dampening;
+      currentOffset.y *= dampening;
+      currentVelocity.x += -currentOffset.x * springStrength;
+      currentVelocity.y += -currentOffset.y * springStrength;
+      
+      setTouchOffset({ ...currentOffset });
+      
+      // Continue animation if still moving
+      if (Math.abs(currentVelocity.x) > 0.1 || Math.abs(currentVelocity.y) > 0.1 || 
+          Math.abs(currentOffset.x) > 0.5 || Math.abs(currentOffset.y) > 0.5) {
+        requestAnimationFrame(animate);
+      } else {
+        // Reset to center
+        setTouchOffset({ x: 0, y: 0 });
+        setIsFlicking(false);
+      }
+    };
+    
+    requestAnimationFrame(animate);
   };
 
   return (
@@ -269,7 +345,15 @@ function App() {
         isDarkMode 
           ? 'dark:rounded-lg h-[540px] md:h-[623px] max-w-3xl' 
           : 'h-[460px] md:h-[513px] max-w-2xl'
-      }`}>
+      }`}
+      style={{
+        transform: `translate(${touchOffset.x}px, ${touchOffset.y}px)`,
+        transition: isFlicking ? 'none' : 'transform 0.3s ease-out'
+      }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      >
         <div className={`rounded-lg shadow-lg text-center mx-auto transition-all duration-500 ease-in-out h-full ${
           isDarkMode
             ? 'bg-gradient-to-br from-[#4a1123]/90 to-[#1f060e]/90 p-6 md:p-12 lg:p-12'
@@ -298,8 +382,14 @@ function App() {
                   : 'border-4 border-[#8a163a] mb-8'
               }`}
               onClick={handlePhotoClick}
-              onTouchStart={() => setIsPhotoPressed(true)}
-              onTouchEnd={() => setIsPhotoPressed(false)}
+              onTouchStart={(e) => {
+                setIsPhotoPressed(true);
+                e.stopPropagation();
+              }}
+              onTouchEnd={(e) => {
+                setIsPhotoPressed(false);
+                e.stopPropagation();
+              }}
               onMouseDown={() => setIsPhotoPressed(true)}
               onMouseUp={() => setIsPhotoPressed(false)}
               onMouseLeave={() => setIsPhotoPressed(false)}
@@ -344,8 +434,14 @@ function App() {
                            min-w-[140px] w-auto ${
                              isButtonPressed ? 'scale-95' : 'hover:scale-105'
                            }`}
-                onTouchStart={() => setIsButtonPressed(true)}
-                onTouchEnd={() => setIsButtonPressed(false)}
+                onTouchStart={(e) => {
+                  setIsButtonPressed(true);
+                  e.stopPropagation();
+                }}
+                onTouchEnd={(e) => {
+                  setIsButtonPressed(false);
+                  e.stopPropagation();
+                }}
                 onMouseDown={() => setIsButtonPressed(true)}
                 onMouseUp={() => setIsButtonPressed(false)}
                 onMouseLeave={() => setIsButtonPressed(false)}
