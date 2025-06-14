@@ -67,7 +67,7 @@ function App() {
 
   const downloadCalendarInvite = () => {
     const event = {
-      title: language === 'en' ? 'Wedding of Simona & Martin' : 'Сватба на Симона & Мартин',
+      title: language === 'en' ? 'The Wedding of Simona & Martin' : 'Сватбата на Симона & Мартин',
       description: language === 'en' ? 'Vamooos!' : 'Айдеее!',
       location: language === 'en' ? 'Pasarel Lake Club - https://maps.app.goo.gl/6cpMAtGf2iUf2VXR6' : 'Пасарел Лейк Клъб - https://maps.app.goo.gl/6cpMAtGf2iUf2VXR6',
       startTime: '2026-07-10T00:00:00',
