@@ -262,7 +262,7 @@ function App() {
       }`}>
         <div className={`rounded-lg shadow-lg text-center mx-auto transition-all duration-500 ease-in-out h-full ${
           isDarkMode
-            ? 'bg-gradient-to-br from-[#4a1123] to-[#1f060e] p-6 md:p-12 lg:p-12'
+            ? 'bg-gradient-to-br from-[#4a1123]/90 to-[#1f060e]/90 p-6 md:p-12 lg:p-12'
             : 'bg-gradient-to-br from-white/90 to-stone-100/90 py-12 md:py-16 lg:py-16 px-6 md:px-12 lg:px-12'
         }`}>
           {/* Language Toggle Button */}
