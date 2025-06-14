@@ -20,13 +20,21 @@ function App() {
   const [isTextAnimating, setIsTextAnimating] = useState(false);
   const { width, height } = useWindowSize();
 
-  // Effect to toggle dark class on html element
+  // Effect to toggle dark class on html element and update theme color
   useEffect(() => {
     const root = window.document.documentElement;
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    
     if (isDarkMode) {
       root.classList.add('dark');
+      if (themeColorMeta) {
+        themeColorMeta.setAttribute('content', '#1a0006');
+      }
     } else {
       root.classList.remove('dark');
+      if (themeColorMeta) {
+        themeColorMeta.setAttribute('content', '#f4ede3');
+      }
     }
   }, [isDarkMode]);
 
