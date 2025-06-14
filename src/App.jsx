@@ -257,8 +257,8 @@ function App() {
       {/* Main content Wrapper for Gradient Border */}
       <div className={`relative z-10 transition-all duration-500 ease-in-out w-full ${
         isDarkMode 
-          ? 'dark:rounded-lg h-[540px] md:h-[600px] max-w-2xl' 
-          : 'h-[460px] md:h-[509px] max-w-xl'
+          ? 'dark:rounded-lg h-[540px] md:h-[604px] max-w-3xl' 
+          : 'h-[460px] md:h-[513px] max-w-2xl'
       }`}>
         <div className={`rounded-lg shadow-lg text-center mx-auto transition-all duration-500 ease-in-out h-full ${
           isDarkMode
@@ -295,11 +295,17 @@ function App() {
             </div>
 
             {/* Subtitle */}
-            <p className={`font-title-cursive text-2xl md:text-3xl lg:text-4xl mb-2 transition-colors duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-1' : 'text-[#8a163a]'} ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}>
+            <p 
+              key={`subtitle-${language}`}
+              className={`font-title-cursive text-2xl md:text-3xl lg:text-4xl mb-4 px-4 transition-colors duration-500 ease-in-out whitespace-nowrap ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-1' : 'text-[#8a163a]'} ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}
+            >
               {language === 'en' ? 'The Wedding of' : 'Сватбата на'}
             </p>
 
-            <h1 className={`font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap transition-colors duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-2 dark:mb-2 md:dark:mb-6' : 'text-[#8a163a]'} ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}>
+            <h1 
+              key={`title-${language}`}
+              className={`font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 px-4 whitespace-nowrap transition-colors duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-2 dark:mb-2 md:dark:mb-6' : 'text-[#8a163a]'} ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}
+            >
               {language === 'en' ? 'Simona & Martin' : 'Симона & Мартин'}
             </h1>
 
@@ -310,8 +316,9 @@ function App() {
                            mt-2 md:mt-0
                            bg-gradient-to-br from-[#8a163a] to-[#5d0e27]
                            hover:from-[#8a163a] hover:to-[#5d0e27]
-                           transition-all transition-width duration-500 ease-in-out transform hover:scale-105 
-                           focus:outline-none focus:ring-2 focus:ring-[#8a163a] focus:ring-opacity-50 shadow-lg`}
+                           transition-all duration-500 ease-in-out transform hover:scale-105 
+                           focus:outline-none focus:ring-2 focus:ring-[#8a163a] focus:ring-opacity-50 shadow-lg
+                           min-w-[140px] w-auto`}
               >
                 <span className={`${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'} inline-block`}>
                   {language === 'en' ? 'Save the Date' : 'Запази Датата'}
