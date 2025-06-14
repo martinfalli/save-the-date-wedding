@@ -18,6 +18,8 @@ function App() {
   const [isPopupClosing, setIsPopupClosing] = useState(false);
   const [graceAnimationKey, setGraceAnimationKey] = useState(0);
   const [isTextAnimating, setIsTextAnimating] = useState(false);
+  const [isPhotoPressed, setIsPhotoPressed] = useState(false);
+  const [isButtonPressed, setIsButtonPressed] = useState(false);
   const { width, height } = useWindowSize();
 
   // Effect to toggle dark class on html element and update theme color
@@ -288,12 +290,19 @@ function App() {
           <div className="flex flex-col items-center justify-center h-full transition-all duration-500 ease-in-out">
             {/* Wrapper for Gradient/Solid Border */}
             <div 
-              className={`inline-block transition-all duration-500 ease-in-out transform active:scale-90 lg:hover:scale-95 cursor-pointer rounded-full shadow-md ${
+              className={`inline-block transition-all duration-500 ease-in-out transform cursor-pointer rounded-full shadow-md ${
+                isPhotoPressed ? 'scale-90' : 'lg:hover:scale-95'
+              } ${
                 isDarkMode 
                   ? 'p-[4px] bg-gradient-to-br from-[#f2cf52] via-[#a68d33] to-[#f2cf52] mb-10' 
                   : 'border-4 border-[#8a163a] mb-8'
               }`}
               onClick={handlePhotoClick}
+              onTouchStart={() => setIsPhotoPressed(true)}
+              onTouchEnd={() => setIsPhotoPressed(false)}
+              onMouseDown={() => setIsPhotoPressed(true)}
+              onMouseUp={() => setIsPhotoPressed(false)}
+              onMouseLeave={() => setIsPhotoPressed(false)}
             >
               <img 
                 src={couplePhoto} 
@@ -324,9 +333,15 @@ function App() {
                            mt-2 md:mt-0
                            bg-gradient-to-br from-[#8a163a] to-[#5d0e27]
                            hover:from-[#8a163a] hover:to-[#5d0e27]
-                           transition-all duration-500 ease-in-out transform hover:scale-105 
-                           focus:outline-none focus:ring-2 focus:ring-[#8a163a] focus:ring-opacity-50 shadow-lg
-                           min-w-[140px] w-auto`}
+                           transition-all duration-500 ease-in-out transform focus:outline-none focus:ring-2 focus:ring-[#8a163a] focus:ring-opacity-50 shadow-lg
+                           min-w-[140px] w-auto ${
+                             isButtonPressed ? 'scale-95' : 'hover:scale-105'
+                           }`}
+                onTouchStart={() => setIsButtonPressed(true)}
+                onTouchEnd={() => setIsButtonPressed(false)}
+                onMouseDown={() => setIsButtonPressed(true)}
+                onMouseUp={() => setIsButtonPressed(false)}
+                onMouseLeave={() => setIsButtonPressed(false)}
               >
                 <span className={`${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'} inline-block`}>
                   {language === 'en' ? 'Save the Date' : 'Запази Датата'}
