@@ -297,14 +297,14 @@ function App() {
             {/* Subtitle */}
             <p 
               key={`subtitle-${language}`}
-              className={`font-title-cursive text-2xl md:text-3xl lg:text-4xl mb-4 px-4 transition-colors duration-500 ease-in-out whitespace-nowrap ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-1' : 'text-[#8a163a]'} ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}
+              className={`font-title-cursive text-2xl md:text-3xl lg:text-4xl mb-4 px-4 transition-colors duration-500 ease-in-out whitespace-nowrap ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-1 dark:mb-3' : 'text-[#8a163a]'} ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}
             >
               {language === 'en' ? 'The Wedding of' : 'Сватбата на'}
             </p>
 
             <h1 
               key={`title-${language}`}
-              className={`font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 px-4 whitespace-nowrap transition-colors duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-2 dark:mb-2 md:dark:mb-6' : 'text-[#8a163a]'} ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}
+              className={`font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 px-4 whitespace-nowrap transition-colors duration-500 ease-in-out ${isDarkMode ? 'dark:bg-gradient-to-br dark:from-[#f2cf52] dark:via-[#a68d33] dark:to-[#f2cf52] dark:bg-clip-text dark:text-transparent dark:pt-2 dark:mb-2' : 'text-[#8a163a]'} ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}
             >
               {language === 'en' ? 'Simona & Martin' : 'Симона & Мартин'}
             </h1>
