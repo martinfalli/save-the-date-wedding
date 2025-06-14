@@ -132,13 +132,13 @@ function App() {
     const timeDelta = now - lastTouchTime;
     if (timeDelta > 0) {
       setVelocity({
-        x: deltaX / timeDelta,
+        x: 0, // Ignore horizontal velocity
         y: deltaY / timeDelta
       });
     }
     setLastTouchTime(now);
     
-    setTouchOffset({ x: deltaX, y: deltaY });
+    setTouchOffset({ x: 0, y: deltaY }); // Only allow vertical movement
     e.preventDefault();
   };
 
@@ -146,32 +146,27 @@ function App() {
     setIsFlicking(true);
     
     // Add momentum and spring back animation
-    let currentOffset = { ...touchOffset };
-    const friction = 0.95;
-    let currentVelocity = { x: velocity.x * 20, y: velocity.y * 20 };
+    let currentOffset = { x: 0, y: touchOffset.y }; // Only Y offset
+    const friction = 0.9; // Increased friction for quicker settling
+    let currentVelocity = { x: 0, y: velocity.y * 15 }; // Only Y velocity, reduced multiplier
     
     const animate = () => {
       // Apply momentum
-      currentOffset.x += currentVelocity.x;
       currentOffset.y += currentVelocity.y;
       
       // Apply friction
-      currentVelocity.x *= friction;
       currentVelocity.y *= friction;
       
-      // Spring back to center
-      const springStrength = 0.05;
-      const dampening = 0.8;
-      currentOffset.x *= dampening;
+      // Spring back to center - stronger spring for quicker return
+      const springStrength = 0.15; // Increased spring strength
+      const dampening = 0.7; // Increased dampening
       currentOffset.y *= dampening;
-      currentVelocity.x += -currentOffset.x * springStrength;
       currentVelocity.y += -currentOffset.y * springStrength;
       
-      setTouchOffset({ ...currentOffset });
+      setTouchOffset({ x: 0, y: currentOffset.y });
       
-      // Continue animation if still moving
-      if (Math.abs(currentVelocity.x) > 0.1 || Math.abs(currentVelocity.y) > 0.1 || 
-          Math.abs(currentOffset.x) > 0.5 || Math.abs(currentOffset.y) > 0.5) {
+      // Continue animation if still moving - tighter thresholds for quicker stop
+      if (Math.abs(currentVelocity.y) > 0.05 || Math.abs(currentOffset.y) > 0.2) {
         requestAnimationFrame(animate);
       } else {
         // Reset to center
@@ -347,8 +342,8 @@ function App() {
           : 'h-[460px] md:h-[513px] max-w-2xl'
       }`}
       style={{
-        transform: `translate(${touchOffset.x}px, ${touchOffset.y}px)`,
-        transition: isFlicking ? 'none' : 'transform 0.3s ease-out'
+        transform: `translateY(${touchOffset.y}px)`,
+        transition: isFlicking ? 'none' : 'transform 0.2s ease-out'
       }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
