@@ -335,6 +335,7 @@ function App() {
 
             {!isDateRevealed ? (
               <button
+                key={`button-${language}`}
                 onClick={revealDate}
                 className={`text-white font-bold py-3 px-6 rounded-full 
                            mt-2 md:mt-0
@@ -343,16 +344,14 @@ function App() {
                            transition-all duration-500 ease-in-out transform focus:outline-none focus:ring-2 focus:ring-[#8a163a] focus:ring-opacity-50 shadow-lg
                            min-w-[140px] w-auto ${
                              isButtonPressed ? 'scale-95' : 'hover:scale-105'
-                           }`}
+                           } ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}
                 onTouchStart={() => setIsButtonPressed(true)}
                 onTouchEnd={() => setIsButtonPressed(false)}
                 onMouseDown={() => setIsButtonPressed(true)}
                 onMouseUp={() => setIsButtonPressed(false)}
                 onMouseLeave={() => setIsButtonPressed(false)}
               >
-                <span className={`${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'} inline-block`}>
-                  {language === 'en' ? 'Save the Date' : 'Запази Датата'}
-                </span>
+                {language === 'en' ? 'Save the Date' : 'Запази Датата'}
               </button>
             ) : (
               <div className={`animate-fadeInScale space-y-3 transition-colors duration-500 ease-in-out ${isDarkMode ? 'mt-4 md:mt-6' : ''} md:-mt-[0.125rem]`}>
