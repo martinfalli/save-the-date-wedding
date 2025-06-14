@@ -257,7 +257,7 @@ function App() {
       {/* Main content Wrapper for Gradient Border */}
       <div className={`relative z-10 transition-all duration-500 ease-in-out w-full ${
         isDarkMode 
-          ? 'dark:rounded-lg h-[540px] md:h-[604px] max-w-3xl' 
+          ? 'dark:rounded-lg h-[540px] md:h-[623px] max-w-3xl' 
           : 'h-[460px] md:h-[513px] max-w-2xl'
       }`}>
         <div className={`rounded-lg shadow-lg text-center mx-auto transition-all duration-500 ease-in-out h-full ${
@@ -325,7 +325,7 @@ function App() {
                 </span>
               </button>
             ) : (
-              <div className={`animate-fadeInScale space-y-3 transition-colors duration-500 ease-in-out ${isDarkMode ? 'mt-4' : ''} md:-mt-[0.125rem]`}>
+              <div className={`animate-fadeInScale space-y-3 transition-colors duration-500 ease-in-out ${isDarkMode ? 'mt-4 md:mt-6' : ''} md:-mt-[0.125rem]`}>
                 <p 
                   onClick={downloadCalendarInvite}
                   className={`text-xl md:text-2xl font-semibold transition-colors duration-500 ease-in-out hover:opacity-80 cursor-pointer ${
