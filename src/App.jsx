@@ -308,6 +308,13 @@ function App() {
                 src={couplePhoto} 
                 alt="Simona & Martin" 
                 className={`block w-48 h-48 md:w-56 md:h-56 rounded-full object-cover`} 
+                style={{
+                  WebkitUserSelect: 'none',
+                  WebkitTouchCallout: 'none',
+                  WebkitTapHighlightColor: 'transparent',
+                  userSelect: 'none'
+                }}
+                draggable={false}
               />
             </div>
 
