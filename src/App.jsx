@@ -20,6 +20,7 @@ function App() {
   const [isTextAnimating, setIsTextAnimating] = useState(false);
   const [isPhotoPressed, setIsPhotoPressed] = useState(false);
   const [isButtonPressed, setIsButtonPressed] = useState(false);
+  const [touchTimeout, setTouchTimeout] = useState(null);
   const { width, height } = useWindowSize();
 
   // Effect to toggle dark class on html element and update theme color
@@ -298,8 +299,18 @@ function App() {
                   : 'border-4 border-[#8a163a] mb-8'
               }`}
               onClick={handlePhotoClick}
-              onTouchStart={() => setIsPhotoPressed(true)}
-              onTouchEnd={() => setIsPhotoPressed(false)}
+              onTouchStart={() => {
+                if (touchTimeout) {
+                  clearTimeout(touchTimeout);
+                }
+                setIsPhotoPressed(true);
+              }}
+              onTouchEnd={() => {
+                const timeout = setTimeout(() => {
+                  setIsPhotoPressed(false);
+                }, 150);
+                setTouchTimeout(timeout);
+              }}
               onMouseDown={() => setIsPhotoPressed(true)}
               onMouseUp={() => setIsPhotoPressed(false)}
               onMouseLeave={() => setIsPhotoPressed(false)}
