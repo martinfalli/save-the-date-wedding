@@ -4,6 +4,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ensure Safari/Android browser UI bars match the app theme */
+html {
+  background-color: #f4ede3; /* light theme background */
+}
+
+html.dark {
+  background-color: #1a0006; /* dark theme background */
+}
+
+body {
+  background-color: transparent; /* use html background to color browser chrome */
+}
+
 body {
   @apply font-sans text-brand-text;
 } 
