@@ -31,7 +31,7 @@ function App() {
     if (isDarkMode) {
       root.classList.add('dark');
       if (themeColorMeta) {
-        themeColorMeta.setAttribute('content', '#1a0006');
+        themeColorMeta.setAttribute('content', '#4a1123');
       }
     } else {
       root.classList.remove('dark');
