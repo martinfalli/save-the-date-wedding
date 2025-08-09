@@ -109,7 +109,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 font-sans animate-pageLoad transition-colors duration-500 relative">
+    <div className="min-h-[100dvh] md:min-h-screen flex items-center justify-center p-4 font-sans animate-pageLoad transition-colors duration-500 relative">
       {/* Background elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Background gradient */}
