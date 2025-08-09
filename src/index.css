@@ -10,8 +10,7 @@ html {
 }
 
 html.dark {
-  /* Match the prominent dark burgundy used in the app gradient */
-  background-color: #4a1123; /* dark theme background */
+  background-color: #1a0006; /* dark theme background */
 }
 
 body {
