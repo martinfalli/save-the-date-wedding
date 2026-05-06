@@ -1,22 +1,203 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
+
+/* Futura Cyrillic — local font files in /fonts/ */
+@font-face {
+  font-family: 'Futura Cyrillic';
+  src: url('../fonts/FuturaCyrillicBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Futura Cyrillic';
+  src: url('../fonts/FuturaCyrillicDemi.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Futura Cyrillic';
+  src: url('../fonts/FuturaCyrillicMedium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Futura Cyrillic';
+  src: url('../fonts/FuturaCyrillicBook.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Ensure Safari/Android browser UI bars match the app theme */
 html {
-  background-color: #f4ede3; /* light theme background */
+  background-color: #f5f0e8;
+  scroll-behavior: smooth;
 }
 
 html.dark {
-  background-color: #1a0006; /* dark theme background */
+  /* Match Save the Date / RSVP forest toolbar (was wine #1a0006) */
+  background-color: #003625;
+}
+
+/* Match RSVP forest when inverted — avoids cream html peeking below 100dvh on mobile */
+html.rsvp-inverted {
+  background-color: #003625;
 }
 
 body {
-  background-color: transparent; /* use html background to color browser chrome */
+  background-color: transparent;
 }
 
 body {
   @apply font-sans text-brand-text;
-} 
+}
+
+/* Scroll snap for RSVP sections */
+/* Height = full viewport minus the 56px (3.5rem / h-14) sticky navbar */
+/* Only this element scrolls — do NOT put overflow-y + overscroll-behavior on snap children
+   or wheel events get trapped and the list won’t scroll. */
+.rsvp-scroll-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+  min-height: 0;
+  touch-action: pan-y;
+  overscroll-behavior-y: auto;
+}
+
+.rsvp-scroll-section {
+  scroll-snap-align: start;
+  /* "always" can feel stuck when reversing scroll direction */
+  scroll-snap-stop: normal;
+  min-height: calc(100dvh - 3.5rem);
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Don’t clip tall content (e.g. large logo); only the outer container scrolls */
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+/* Smooth transition for intersection observer animations */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Navbar — pill-shaped hover fill (green) */
+.nav-link-pill {
+  @apply relative rounded-full px-3 py-1.5 text-sm font-semibold tracking-wide transition-colors duration-200;
+}
+
+.nav-link-pill:not(:disabled):hover {
+  @apply bg-brand-forest text-[#f5f0e8];
+}
+
+.nav-link-pill-dark:not(:disabled):hover {
+  @apply bg-[#003625] text-[#f5f0e8];
+}
+
+/* Navbar — RSVP invert (cream on forest toolbar) */
+.nav-link-pill-rsvp-inverted {
+  @apply relative rounded-full px-3 py-1.5 text-sm font-semibold tracking-wide transition-colors duration-200;
+}
+
+.nav-link-pill-rsvp-inverted:not(:disabled):hover {
+  background-color: rgba(245, 240, 232, 0.12);
+  color: #f5f0e8;
+}
+
+/* Language toggle button — RSVP inverted mode */
+.nav-lang-btn-rsvp-inverted {
+  background-color: rgba(245, 240, 232, 0.10);
+  color: #f5f0e8;
+}
+
+.nav-lang-btn-rsvp-inverted:hover {
+  background-color: rgba(245, 240, 232, 0.20);
+}
+
+/* Form input focus styles */
+.form-input {
+  @apply w-full border border-brand-forest/30 rounded-lg px-4 py-3 bg-white/60 text-brand-text placeholder-brand-forest/40 transition-all duration-200;
+}
+
+/* RSVP invert — inputs on #003625; text/accents #f5f0e8 */
+.form-input-inverted {
+  @apply w-full rounded-lg px-4 py-3 transition-all duration-200;
+  color: #f5f0e8;
+  border: 1px solid rgba(245, 240, 232, 0.35);
+  background-color: rgba(245, 240, 232, 0.1);
+}
+
+.form-input-inverted::placeholder {
+  color: rgba(245, 240, 232, 0.45);
+}
+
+.form-input-inverted:focus {
+  @apply outline-none ring-2;
+  border-color: #f5f0e8;
+  --tw-ring-color: rgba(245, 240, 232, 0.25);
+  background-color: rgba(245, 240, 232, 0.15);
+}
+
+.form-input-inverted.error {
+  @apply border-red-400 ring-2 ring-red-300/40;
+}
+
+.form-input:focus {
+  @apply outline-none border-brand-forest ring-2 ring-brand-forest/20 bg-white/80;
+}
+
+.form-input.error {
+  @apply border-red-400 ring-2 ring-red-200;
+}
+
+/* RSVP section — subtle background stars (float + scroll parallax on wrapper) */
+.rsvp-star-float-a {
+  animation: rsvp-star-float-a 9s ease-in-out infinite;
+}
+.rsvp-star-float-b {
+  animation: rsvp-star-float-b 11s ease-in-out infinite;
+}
+/* Gentle vertical oscillation */
+@keyframes rsvp-star-float-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 12px, 0);
+  }
+}
+@keyframes rsvp-star-float-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 9px, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rsvp-star-float-a,
+  .rsvp-star-float-b {
+    animation: none;
+  }
+}

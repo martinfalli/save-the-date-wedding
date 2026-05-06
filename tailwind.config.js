@@ -8,14 +8,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        'brand-forest': '#003625',
+        'brand-forest-dark': '#002a1c',
+        'brand-bg': '#f5f0e8',
         'brand-green': '#2E7D32',
         'brand-pink': '#C2185B',
         'brand-neutral-light': '#F5F5F5',
         'brand-neutral-dark': '#424242',
-        'brand-text': '#333333',
+        'brand-text': '#003625',
       },
       fontFamily: {
-        'sans': ['Lato', 'sans-serif'],
+        'sans': ['Futura Cyrillic', 'Montserrat', 'sans-serif'],
         'serif': ['Playfair Display', 'serif'],
         'cursive': ['Dancing Script', 'cursive'],
         'title-cursive': ['Great Vibes', 'cursive'],
@@ -88,7 +91,20 @@ module.exports = {
         fadeTextIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
-        }
+        },
+        heartPop: {
+          '0%': { transform: 'scale(0) rotate(-10deg)', opacity: '0' },
+          '60%': { transform: 'scale(1.2) rotate(5deg)', opacity: '1' },
+          '100%': { transform: 'scale(1) rotate(0deg)', opacity: '1' },
+        },
+        fadeSlideUp: {
+          '0%': { opacity: '0', transform: 'translateY(2rem)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeSlideIn: {
+          '0%': { opacity: '0', transform: 'translateY(1.5rem)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       animation: {
         fadeInScale: 'fadeInScale 0.5s ease-out forwards',
@@ -108,6 +124,9 @@ module.exports = {
         'pulse-subtle': 'pulseSubtle 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'fade-text-out': 'fadeTextOut 0.3s ease-out forwards',
         'fade-text-in': 'fadeTextIn 0.3s ease-out forwards',
+        'heart-pop': 'heartPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+        'fade-slide-up': 'fadeSlideUp 0.7s ease-out forwards',
+        'fade-slide-in': 'fadeSlideIn 0.6s ease-out forwards',
       },
       animationDelay: {
         '500': '500ms',
@@ -118,4 +137,4 @@ module.exports = {
     },
   },
   plugins: [],
-} 
+}
