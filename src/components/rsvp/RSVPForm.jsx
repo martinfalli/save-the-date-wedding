@@ -172,7 +172,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
     rsvpLabel: language === 'en' ? 'Will you attend?' : 'Ще присъствате ли?',
     rsvpYes: language === 'en' ? 'Yes' : 'Да',
     rsvpNo: language === 'en' ? 'No' : 'Не',
-    vegetarianLabel: language === 'en' ? 'Vegetarian menu?' : 'Вегетарианско меню?',
+    vegetarianLabel: language === 'en' ? 'Would you like a vegetarian menu?' : 'Искате ли вегетарианско меню?',
     songsLabel: language === 'en' ? 'Song suggestions' : 'Предложения за песни',
     songsPlaceholder:
       language === 'en'
