@@ -45,7 +45,7 @@ export default function RSVPTimeline({ language, isTextAnimating = false, invert
               src={timelineSvg}
               inverted={inverted}
               invertedMode="filter"
-              className="h-auto w-auto max-h-[min(76vh,920px)] max-w-[min(98vw,42rem)] origin-center object-contain object-center scale-[1.3] md:max-h-[min(86vh,1100px)] md:max-w-[min(92vw,88rem)] md:scale-150"
+              className="h-auto w-auto max-h-[min(76vh,920px)] max-w-[min(98vw,42rem)] object-contain object-center timeline-svg-scaled md:max-h-[min(86vh,1100px)] md:max-w-[min(92vw,88rem)]"
             />
           </div>
         </div>
