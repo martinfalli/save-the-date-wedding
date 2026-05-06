@@ -2,6 +2,36 @@ import React, { useEffect, useRef, useState } from 'react';
 
 // Set VITE_GOOGLE_SHEET_URL in project-root .env (see .env.example + google-apps-script/AppendRSVP.gs).
 const SHEET_URL = import.meta.env.VITE_GOOGLE_SHEET_URL;
+const LS_KEY = 'rsvp_submitted_names';
+
+function lsHasName(name) {
+  try {
+    const stored = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+    return stored.includes(name.toLowerCase().trim());
+  } catch { return false; }
+}
+
+function lsSaveName(name) {
+  try {
+    const stored = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+    stored.push(name.toLowerCase().trim());
+    localStorage.setItem(LS_KEY, JSON.stringify(stored));
+  } catch {}
+}
+
+/** Calls doGet?action=check&name=… on the same GAS URL. Times out after 4 s. */
+async function remoteHasName(name) {
+  if (!SHEET_URL) return false;
+  try {
+    const url = `${SHEET_URL}?action=check&name=${encodeURIComponent(name)}`;
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 4000);
+    const res = await fetch(url, { signal: ctrl.signal });
+    clearTimeout(timer);
+    const data = await res.json();
+    return data.exists === true;
+  } catch { return false; }
+}
 
 /** Local time for the sheet, e.g. 2026-03-31 22:50:24 */
 function formatDateForSheet(d = new Date()) {
@@ -16,8 +46,14 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
   const [submitError, setSubmitError] = useState(null);
 
   const [fields, setFields] = useState({ name: '', songs: '', message: '' });
+  const [rsvp, setRsvp] = useState(null);       // 'yes' | 'no' | null
+  const [vegetarian, setVegetarian] = useState(null); // 'yes' | 'no' | null
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const [toast, setToast] = useState('');
+  const toastTimer = useRef(null);
+
+  useEffect(() => () => clearTimeout(toastTimer.current), []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -28,10 +64,13 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
     return () => observer.disconnect();
   }, []);
 
-  const validate = (values) => {
+  const validate = (values, currentRsvp) => {
     const errs = {};
     if (!values.name.trim()) {
       errs.name = language === 'en' ? 'Name is required' : 'Името е задължително';
+    }
+    if (!currentRsvp) {
+      errs.rsvp = language === 'en' ? 'Please select Yes or No' : 'Моля, изберете Да или Не';
     }
     return errs;
   };
@@ -40,7 +79,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
     const { name, value } = e.target;
     setFields((prev) => ({ ...prev, [name]: value }));
     if (touched[name]) {
-      const errs = validate({ ...fields, [name]: value });
+      const errs = validate({ ...fields, [name]: value }, rsvp);
       setErrors(errs);
     }
   };
@@ -48,16 +87,42 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
   const handleBlur = (e) => {
     const { name } = e.target;
     setTouched((prev) => ({ ...prev, [name]: true }));
-    const errs = validate({ ...fields, [name]: e.target.value });
+    const errs = validate({ ...fields, [name]: e.target.value }, rsvp);
+    setErrors(errs);
+  };
+
+  const showToast = (msg) => {
+    clearTimeout(toastTimer.current);
+    setToast(msg);
+    toastTimer.current = setTimeout(() => setToast(''), 5000);
+  };
+
+  const handleRsvp = (value) => {
+    setRsvp(value);
+    if (value === 'no') setVegetarian(null);
+    setTouched((prev) => ({ ...prev, rsvp: true }));
+    const errs = validate(fields, value);
     setErrors(errs);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setTouched({ name: true, songs: true, message: true });
-    const errs = validate(fields);
+    setTouched({ name: true, songs: true, message: true, rsvp: true });
+    const errs = validate(fields, rsvp);
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
+
+    const trimmedName = fields.name.trim();
+
+    // Duplicate check — localStorage first (instant), then remote sheet
+    if (lsHasName(trimmedName) || await remoteHasName(trimmedName)) {
+      showToast(
+        language === 'en'
+          ? `You've already RSVP'd, ${trimmedName.split(' ')[0]}!`
+          : `Вече сте потвърдили присъствието си, ${trimmedName.split(' ')[0]}!`
+      );
+      return;
+    }
 
     setIsSubmitting(true);
     setSubmitError(null);
@@ -65,9 +130,11 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
     try {
       const payload = {
         date: formatDateForSheet(),
-        name: fields.name.trim(),
+        name: trimmedName,
         songs: fields.songs.trim(),
         message: fields.message.trim(),
+        rsvp: rsvp === 'yes' ? 'Yes' : 'No',
+        vegetarian: rsvp === 'yes' ? (vegetarian === 'yes' ? 'Yes' : vegetarian === 'no' ? 'No' : '') : '',
       };
 
       if (SHEET_URL) {
@@ -85,7 +152,8 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
         console.info('[RSVP mock submission]', payload);
       }
 
-      onSuccess(fields.name.trim());
+      lsSaveName(trimmedName);
+      onSuccess(trimmedName);
     } catch (err) {
       setSubmitError(
         language === 'en'
@@ -101,6 +169,10 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
     title: language === 'en' ? 'Will you join us?' : 'Ще дойдете ли?',
     namePlaceholder: language === 'en' ? 'Your name' : 'Име и фамилия',
     nameLabel: language === 'en' ? 'Name' : 'Име',
+    rsvpLabel: language === 'en' ? 'Will you attend?' : 'Ще присъствате ли?',
+    rsvpYes: language === 'en' ? 'Yes' : 'Да',
+    rsvpNo: language === 'en' ? 'No' : 'Не',
+    vegetarianLabel: language === 'en' ? 'Vegetarian menu?' : 'Вегетарианско меню?',
     songsLabel: language === 'en' ? 'Song suggestions' : 'Предложения за песни',
     songsPlaceholder:
       language === 'en'
@@ -130,6 +202,25 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
           visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}
       >
+        {/* Duplicate RSVP toast */}
+        <div
+          aria-live="polite"
+          className={`overflow-hidden transition-all duration-500 ease-out ${
+            toast ? 'max-h-20 opacity-100 mb-4' : 'max-h-0 opacity-0 mb-0'
+          }`}
+        >
+          <div
+            className={`flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold ${
+              inverted
+                ? 'bg-[#f5f0e8]/15 text-[#f5f0e8] border border-[#f5f0e8]/25'
+                : 'bg-[#003625]/10 text-[#003625] border border-[#003625]/20'
+            }`}
+          >
+            <span className="text-base">✓</span>
+            {toast}
+          </div>
+        </div>
+
         <h2
           key={`form-title-${language}`}
           className={`font-title-cursive text-6xl sm:text-7xl md:text-5xl lg:text-6xl text-center leading-tight mb-6 ${
@@ -165,6 +256,76 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
               <p className={`text-red-500 text-sm animate-fade-slide-in ${langFade}`}>{errors.name}</p>
             )}
           </div>
+
+          {/* RSVP yes/no */}
+          <div className="space-y-2">
+            <label
+              key={`label-rsvp-${language}`}
+              className={`block text-sm font-semibold tracking-wide ${
+                inverted ? 'text-[#f5f0e8]/85' : 'text-brand-forest/80'
+              } ${langFade}`}
+            >
+              {labels.rsvpLabel}{' '}
+              <span className={inverted ? 'text-[#f5f0e8]' : 'text-brand-forest'}>*</span>
+            </label>
+            <div className="flex gap-3">
+              {['yes', 'no'].map((val) => (
+                <button
+                  key={val}
+                  type="button"
+                  onClick={() => handleRsvp(val)}
+                  className={`flex-1 py-2.5 rounded-full text-sm font-bold tracking-wide border-2 transition-all duration-150 focus:outline-none focus:ring-2 ${
+                    inverted
+                      ? rsvp === val
+                        ? 'bg-[#f5f0e8] text-[#003625] border-[#f5f0e8]'
+                        : 'bg-transparent text-[#f5f0e8]/70 border-[#f5f0e8]/40 hover:border-[#f5f0e8] hover:text-[#f5f0e8]'
+                      : rsvp === val
+                        ? 'bg-[#003625] text-[#f5f0e8] border-[#003625]'
+                        : 'bg-transparent text-[#003625]/60 border-[#003625]/30 hover:border-[#003625] hover:text-[#003625]'
+                  } ${inverted ? 'focus:ring-[#f5f0e8]/50' : 'focus:ring-[#003625]/30'}`}
+                >
+                  {val === 'yes' ? labels.rsvpYes : labels.rsvpNo}
+                </button>
+              ))}
+            </div>
+            {touched.rsvp && errors.rsvp && (
+              <p className={`text-red-400 text-sm animate-fade-slide-in`}>{errors.rsvp}</p>
+            )}
+          </div>
+
+          {/* Vegetarian — only if attending */}
+          {rsvp === 'yes' && (
+            <div className="space-y-2 animate-fade-slide-in">
+              <label
+                key={`label-veg-${language}`}
+                className={`block text-sm font-semibold tracking-wide ${
+                  inverted ? 'text-[#f5f0e8]/85' : 'text-brand-forest/80'
+                } ${langFade}`}
+              >
+                {labels.vegetarianLabel}
+              </label>
+              <div className="flex gap-3">
+                {['yes', 'no'].map((val) => (
+                  <button
+                    key={val}
+                    type="button"
+                    onClick={() => setVegetarian(val)}
+                    className={`flex-1 py-2.5 rounded-full text-sm font-bold tracking-wide border-2 transition-all duration-150 focus:outline-none focus:ring-2 ${
+                      inverted
+                        ? vegetarian === val
+                          ? 'bg-[#f5f0e8] text-[#003625] border-[#f5f0e8]'
+                          : 'bg-transparent text-[#f5f0e8]/70 border-[#f5f0e8]/40 hover:border-[#f5f0e8] hover:text-[#f5f0e8]'
+                        : vegetarian === val
+                          ? 'bg-[#003625] text-[#f5f0e8] border-[#003625]'
+                          : 'bg-transparent text-[#003625]/60 border-[#003625]/30 hover:border-[#003625] hover:text-[#003625]'
+                    } ${inverted ? 'focus:ring-[#f5f0e8]/50' : 'focus:ring-[#003625]/30'}`}
+                  >
+                    {val === 'yes' ? labels.rsvpYes : labels.rsvpNo}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Songs */}
           <div className="space-y-1.5">
