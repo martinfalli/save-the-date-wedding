@@ -166,19 +166,19 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
   };
 
   const labels = {
-    title: language === 'en' ? 'RSVP' : 'Ще дойдете ли?',
+    title: language === 'en' ? 'RSVP' : 'Покана',
     namePlaceholder: language === 'en' ? 'Your name' : 'Име и фамилия',
     nameLabel: language === 'en' ? 'Name' : 'Име',
-    rsvpLabel: language === 'en' ? 'Will you attend?' : 'Ще присъствате ли?',
+    rsvpLabel: language === 'en' ? 'Will you attend?' : 'Ще дойдеш ли?',
     rsvpYes: language === 'en' ? 'Yes' : 'Да',
     rsvpNo: language === 'en' ? 'No' : 'Не',
-    vegetarianLabel: language === 'en' ? 'Would you like a vegetarian menu?' : 'Искате ли вегетарианско меню?',
+    vegetarianLabel: language === 'en' ? 'Would you like a vegetarian menu?' : 'Искаш ли вегетарианско меню?',
     songsLabel: language === 'en' ? 'Song suggestions' : 'Предложения за песни',
     songsPlaceholder:
       language === 'en'
         ? 'Songs that will get you on the dancefloor...'
         : 'Песни, които искаш да чуеш 👀',
-    messageLabel: language === 'en' ? 'Anything else you want to tell us?' : 'Искате ли да ни кажете още нещо?',
+    messageLabel: language === 'en' ? 'Anything else you want to tell us?' : 'Искаш ли да ни кажеш още нещо?',
     messagePlaceholder:
       language === 'en'
         ? 'Wishes, thoughts, anything...'
