@@ -198,8 +198,8 @@ export default function SaveTheDateSection({
             {/* Subtitle */}
             <p
               key={`subtitle-${language}`}
-              className={`font-title-cursive text-2xl md:text-3xl lg:text-4xl mb-4 px-4 transition-colors duration-500 ease-in-out whitespace-nowrap ${
-                isDarkMode ? 'text-[#f5f0e8] pt-1 mb-3' : 'text-[#003625]'
+              className={`font-sans font-medium text-xs md:text-sm tracking-[0.2em] uppercase mb-2 px-4 transition-colors duration-500 ease-in-out whitespace-nowrap ${
+                isDarkMode ? 'text-[#f5f0e8]/75 pt-1' : 'text-[#003625]/70'
               } ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}
             >
               {language === 'en' ? 'The Wedding of' : 'Сватбата на'}
@@ -208,8 +208,8 @@ export default function SaveTheDateSection({
             {/* Names */}
             <h1
               key={`title-${language}`}
-              className={`font-title-cursive text-5xl md:text-6xl lg:text-7xl mb-4 px-4 whitespace-nowrap transition-colors duration-500 ease-in-out ${
-                isDarkMode ? 'text-[#f5f0e8] pt-2 mb-2' : 'text-[#003625]'
+              className={`font-sans font-bold text-xl md:text-2xl lg:text-3xl mb-4 px-4 whitespace-nowrap tracking-wider uppercase transition-colors duration-500 ease-in-out ${
+                isDarkMode ? 'text-[#f5f0e8] mb-3' : 'text-[#003625]'
               } ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}
             >
               {language === 'en' ? 'Simona & Martin' : 'Симона & Мартин'}
@@ -240,8 +240,8 @@ export default function SaveTheDateSection({
               <div className={`animate-fadeInScale space-y-3 transition-colors duration-500 ease-in-out ${isDarkMode ? 'mt-4 md:mt-6' : ''} md:-mt-[0.125rem]`}>
                 <p
                   onClick={downloadCalendarInvite}
-                  className={`text-xl md:text-2xl font-bold font-sans transition-colors duration-500 ease-in-out hover:opacity-80 cursor-pointer ${
-                    isDarkMode ? 'text-[#f5f0e8]' : 'text-gray-800'
+                  className={`font-title-cursive text-5xl md:text-6xl transition-colors duration-500 ease-in-out hover:opacity-80 cursor-pointer ${
+                    isDarkMode ? 'text-[#f5f0e8]' : 'text-[#003625]'
                   } ${isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in'}`}
                 >
                   {language === 'en' ? '10 July 2026' : '10 Юли 2026'}

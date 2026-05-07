@@ -51,20 +51,20 @@ export default function RSVPTimeline({ language, isTextAnimating = false, invert
         </div>
 
         <div className="shrink-0 flex flex-col items-center gap-4 pb-1 pt-0">
-          <div className={`flex items-center gap-3 ${inverted ? 'text-[#f5f0e8]/45' : 'text-brand-forest/40'}`}>
-            <span className={`block w-8 h-px ${inverted ? 'bg-[#f5f0e8]/30' : 'bg-brand-forest/30'}`} />
+          <div className={`flex items-center gap-3 ${inverted ? 'text-[#f5f0e8]/80' : 'text-brand-forest/75'}`}>
+            <span className={`block w-8 h-px ${inverted ? 'bg-[#f5f0e8]/60' : 'bg-brand-forest/55'}`} />
             <span
               key={`timeline-next-${language}`}
               className={`text-[11px] sm:text-sm font-bold font-sans tracking-widest uppercase ${langFade}`}
             >
               {language === 'en' ? 'Questions' : 'Въпроси'}
             </span>
-            <span className={`block w-8 h-px ${inverted ? 'bg-[#f5f0e8]/30' : 'bg-brand-forest/30'}`} />
+            <span className={`block w-8 h-px ${inverted ? 'bg-[#f5f0e8]/60' : 'bg-brand-forest/55'}`} />
           </div>
 
           <div className="flex flex-col items-center gap-0.5 animate-bounce pt-0.5">
-            <span className={`block w-0.5 h-5 rounded-full ${inverted ? 'bg-[#f5f0e8]/30' : 'bg-brand-forest/30'}`} />
-            <span className={inverted ? 'text-[#f5f0e8]/40' : 'text-brand-forest/40'}>↓</span>
+            <span className={`block w-0.5 h-5 rounded-full ${inverted ? 'bg-[#f5f0e8]/60' : 'bg-brand-forest/55'}`} />
+            <span className={inverted ? 'text-[#f5f0e8]/75' : 'text-brand-forest/70'}>↓</span>
           </div>
         </div>
       </div>

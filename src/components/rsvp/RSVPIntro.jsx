@@ -28,11 +28,11 @@ export default function RSVPIntro({ language, isTextAnimating = false, inverted 
       ref={ref}
       className={`rsvp-scroll-section ${SNAP_H} px-3 py-2 sm:px-4 sm:py-3 md:py-4 text-center w-full flex flex-col min-h-0 !items-stretch !justify-start overflow-hidden`}
     >
-      <div className="flex h-full min-h-0 w-full max-w-3xl mx-auto flex-col gap-1.5 sm:gap-2 md:gap-3">
+      <div className="flex h-full min-h-0 w-full max-w-3xl mx-auto flex-col gap-2 sm:gap-3">
 
         {/* Logo — click toggles cream ↔ forest */}
         <div
-          className={`flex min-h-0 flex-1 w-full items-center justify-center overflow-hidden py-0.5 ${fadeUp}`}
+          className={`shrink-0 flex w-full items-center justify-center overflow-hidden max-h-[52dvh] sm:max-h-[55dvh] ${fadeUp}`}
         >
           <button
             type="button"
@@ -55,30 +55,39 @@ export default function RSVPIntro({ language, isTextAnimating = false, inverted 
           </button>
         </div>
 
-        {/* Headline + body */}
+        {/* Headline: wedding identity */}
         <div
-          className={`shrink-0 space-y-1 sm:space-y-1.5 md:space-y-2 px-1 ${fadeUp}`}
+          className={`shrink-0 flex flex-col items-center gap-0.5 px-1 -mt-1 ${fadeUp}`}
           style={{ transitionDelay: visible ? '80ms' : '0ms' }}
         >
-          <h2
-            key={`invite-${language}`}
-            className={`font-title-cursive text-6xl sm:text-7xl md:text-5xl lg:text-6xl leading-tight ${
-            inverted ? 'text-[#f5f0e8]' : 'text-brand-forest'
-          } ${langFade}`}
-          >
-            {language === 'en' ? "You're Invited" : 'Покана'}
-          </h2>
           <p
-            key={`invite-body-${language}`}
-            className={`text-sm sm:text-base md:text-xl leading-snug sm:leading-relaxed font-sans ${
-            inverted ? 'text-[#f5f0e8]/80' : 'text-brand-forest/80'
-          } ${langFade}`}
+            key={`wedding-of-${language}`}
+            className={`font-sans font-bold text-sm sm:text-base tracking-[0.22em] ${
+              inverted ? 'text-[#f5f0e8]' : 'text-brand-forest'
+            } ${langFade}`}
           >
-            {language === 'en'
-              ? "We'd love to celebrate with you. Please let us know you'll be there."
-              : 'Искаме да отпразнуваме заедно с вас! Кажете ни, дали ще дойдете.'}
+            {language === 'en' ? 'the wedding of' : 'сватбата на'}
+          </p>
+          <p
+            key={`wedding-names-${language}`}
+            className={`font-sans font-bold text-lg sm:text-xl md:text-2xl tracking-widest uppercase leading-tight ${
+              inverted ? 'text-[#f5f0e8]' : 'text-brand-forest'
+            } ${langFade}`}
+          >
+            {language === 'en' ? 'Simona & Martin' : 'Симона & Мартин'}
+          </p>
+          <p
+            key={`wedding-date-${language}`}
+            className={`font-title-cursive text-6xl sm:text-7xl leading-tight pt-6 pb-1 ${
+              inverted ? 'text-[#f5f0e8]' : 'text-brand-forest'
+            } ${langFade}`}
+          >
+            {language === 'en' ? '10 July 2026' : '10 Юли 2026'}
           </p>
         </div>
+
+        {/* Spacer — keeps scroll hint pinned to bottom */}
+        <div className="flex-1 min-h-0" />
 
         {/* Scroll hint */}
         <div
@@ -86,20 +95,20 @@ export default function RSVPIntro({ language, isTextAnimating = false, inverted 
           style={{ transitionDelay: visible ? '160ms' : '0ms' }}
         >
           <div className={`flex items-center gap-2 sm:gap-3 ${
-            inverted ? 'text-[#f5f0e8]/45' : 'text-brand-forest/40'
+            inverted ? 'text-[#f5f0e8]/80' : 'text-brand-forest/75'
           }`}>
-            <span className={`block w-6 sm:w-8 h-px ${inverted ? 'bg-[#f5f0e8]/30' : 'bg-brand-forest/30'}`} />
+            <span className={`block w-6 sm:w-8 h-px ${inverted ? 'bg-[#f5f0e8]/60' : 'bg-brand-forest/55'}`} />
             <span
               key={`scroll-hint-${language}`}
               className={`text-[11px] sm:text-sm font-bold font-sans tracking-widest uppercase ${langFade}`}
             >
               {language === 'en' ? 'The Day' : 'Програма'}
             </span>
-            <span className={`block w-6 sm:w-8 h-px ${inverted ? 'bg-[#f5f0e8]/30' : 'bg-brand-forest/30'}`} />
+            <span className={`block w-6 sm:w-8 h-px ${inverted ? 'bg-[#f5f0e8]/60' : 'bg-brand-forest/55'}`} />
           </div>
           <div className="flex flex-col items-center gap-0.5 animate-bounce pt-0.5">
-            <span className={`block w-0.5 h-3 sm:h-4 rounded-full ${inverted ? 'bg-[#f5f0e8]/30' : 'bg-brand-forest/30'}`} />
-            <span className={inverted ? 'text-[#f5f0e8]/40 text-xs sm:text-sm' : 'text-brand-forest/40 text-xs sm:text-sm'}>↓</span>
+            <span className={`block w-0.5 h-3 sm:h-4 rounded-full ${inverted ? 'bg-[#f5f0e8]/60' : 'bg-brand-forest/55'}`} />
+            <span className={inverted ? 'text-[#f5f0e8]/75 text-xs sm:text-sm' : 'text-brand-forest/70 text-xs sm:text-sm'}>↓</span>
           </div>
         </div>
       </div>
