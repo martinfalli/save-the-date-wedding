@@ -1,5 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+const MoonIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden>
+    <path fillRule="evenodd" clipRule="evenodd" d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813a3.75 3.75 0 002.576-2.576l.813-2.846A.75.75 0 019 4.5z" />
+  </svg>
+);
+
+const SunIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5" aria-hidden>
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+  </svg>
+);
+
 const NAV_ITEMS = [
   { id: 'rsvp', labelEn: 'RSVP', labelBg: 'Покана', disabled: false },
   { id: 'save-the-date', labelEn: 'Save the Date', labelBg: 'Save the Date', disabled: false },
@@ -19,6 +32,7 @@ export default function NavBar({
   onToggleLanguage,
   isDarkMode,
   rsvpInverted = false,
+  onToggleInverted,
   /** When Save the Date overlay is visible (including close animation), light mode uses cream chrome */
   saveTheDateOpen = false,
   onSaveTheDateClick,
@@ -109,8 +123,8 @@ export default function NavBar({
       aria-label="Main navigation"
     >
       <div className="relative max-w-5xl mx-auto h-14 min-w-0 pl-3 pr-[max(0.75rem,env(safe-area-inset-right))] sm:px-4 md:px-8 overflow-x-hidden">
-        {/* Mobile: 3-col grid — language column is fixed so it never gets squeezed off-screen */}
-        <div className="grid md:hidden grid-cols-[2.5rem_minmax(0,1fr)_2.5rem] items-center h-full w-full min-w-0 gap-x-2">
+        {/* Mobile: 4-col grid — hamburger | nav items | dark mode | language */}
+        <div className="grid md:hidden grid-cols-[2.5rem_minmax(0,1fr)_2.5rem_2.5rem] items-center h-full w-full min-w-0 gap-x-1">
           <button
             type="button"
             onClick={mobileOpen && !mobileClosing ? closeMenu : openMobileMenu}
@@ -198,6 +212,14 @@ export default function NavBar({
 
           <button
             type="button"
+            onClick={onToggleInverted}
+            className={`relative z-20 w-10 h-10 flex items-center justify-center rounded-md transition-colors duration-200 justify-self-end ${langBtn}`}
+            aria-label={rsvpInverted ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {rsvpInverted ? <SunIcon /> : <MoonIcon />}
+          </button>
+          <button
+            type="button"
             onClick={onToggleLanguage}
             className={`relative z-20 w-10 h-10 flex items-center justify-center rounded-md text-sm font-bold tracking-wider transition-colors duration-200 justify-self-end ${langBtn}`}
             aria-label={language === 'en' ? 'Switch to Bulgarian' : 'Switch to English'}
@@ -225,14 +247,24 @@ export default function NavBar({
               </li>
             ))}
           </ul>
-          <button
-            type="button"
-            onClick={onToggleLanguage}
-            className={`ml-auto w-10 h-10 flex items-center justify-center rounded-md text-sm font-bold tracking-wider transition-colors duration-200 ${langBtn}`}
-            aria-label={language === 'en' ? 'Switch to Bulgarian' : 'Switch to English'}
-          >
-            {language === 'en' ? 'BG' : 'EN'}
-          </button>
+          <div className="ml-auto flex items-center gap-1">
+            <button
+              type="button"
+              onClick={onToggleInverted}
+              className={`w-10 h-10 flex items-center justify-center rounded-md transition-colors duration-200 ${langBtn}`}
+              aria-label={rsvpInverted ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {rsvpInverted ? <SunIcon /> : <MoonIcon />}
+            </button>
+            <button
+              type="button"
+              onClick={onToggleLanguage}
+              className={`w-10 h-10 flex items-center justify-center rounded-md text-sm font-bold tracking-wider transition-colors duration-200 ${langBtn}`}
+              aria-label={language === 'en' ? 'Switch to Bulgarian' : 'Switch to English'}
+            >
+              {language === 'en' ? 'BG' : 'EN'}
+            </button>
+          </div>
         </div>
       </div>
     </nav>

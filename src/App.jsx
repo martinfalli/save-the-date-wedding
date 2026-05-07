@@ -62,6 +62,7 @@ function App() {
         onToggleLanguage={handleToggleLanguage}
         isDarkMode={isDarkMode}
         rsvpInverted={rsvpInverted}
+        onToggleInverted={() => setRsvpInverted((v) => !v)}
         saveTheDateOpen={showSaveTheDate || isClosingSaveTheDate}
         onSaveTheDateClick={() => {
           if (showSaveTheDate) {
