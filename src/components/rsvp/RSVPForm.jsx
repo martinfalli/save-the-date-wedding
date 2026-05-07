@@ -166,7 +166,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
   };
 
   const labels = {
-    title: language === 'en' ? 'Will you join us?' : 'Ще дойдете ли?',
+    title: language === 'en' ? 'RSVP' : 'Ще дойдете ли?',
     namePlaceholder: language === 'en' ? 'Your name' : 'Име и фамилия',
     nameLabel: language === 'en' ? 'Name' : 'Име',
     rsvpLabel: language === 'en' ? 'Will you attend?' : 'Ще присъствате ли?',

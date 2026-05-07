@@ -15,13 +15,22 @@ function App() {
   const saveTheDateLightOpen =
     (showSaveTheDate || isClosingSaveTheDate) && !isDarkMode;
 
+  // Remove + re-insert forces Safari to re-read the theme-color value
+  const setThemeColor = (color) => {
+    const existing = document.querySelector('meta[name="theme-color"]');
+    if (existing) existing.remove();
+    const meta = document.createElement('meta');
+    meta.name = 'theme-color';
+    meta.content = color;
+    document.head.appendChild(meta);
+  };
+
   useEffect(() => {
     const root = window.document.documentElement;
-    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
     if (isDarkMode) {
       root.classList.add('dark');
       root.classList.remove('rsvp-inverted');
-      if (themeColorMeta) themeColorMeta.setAttribute('content', '#003625');
+      setThemeColor('#003625');
     } else {
       root.classList.remove('dark');
       const forestChrome = rsvpInverted && !saveTheDateLightOpen;
@@ -30,9 +39,7 @@ function App() {
       } else {
         root.classList.remove('rsvp-inverted');
       }
-      if (themeColorMeta) {
-        themeColorMeta.setAttribute('content', forestChrome ? '#003625' : '#f5f0e8');
-      }
+      setThemeColor(forestChrome ? '#003625' : '#f5f0e8');
     }
   }, [isDarkMode, rsvpInverted, saveTheDateLightOpen]);
 

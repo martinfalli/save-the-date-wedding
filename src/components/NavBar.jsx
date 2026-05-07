@@ -15,7 +15,7 @@ const SunIcon = () => (
 
 const NAV_ITEMS = [
   { id: 'rsvp', labelEn: 'RSVP', labelBg: 'Покана', disabled: false },
-  { id: 'save-the-date', labelEn: 'Save the Date', labelBg: 'Save the Date', disabled: false },
+  { id: 'save-the-date', labelEn: 'Save the Date', labelBg: 'Запази Датата', disabled: false },
   { id: 'photos', labelEn: 'Photos', labelBg: 'Снимки', disabled: true },
 ];
 
@@ -134,18 +134,18 @@ export default function NavBar({
           >
             {/* Hamburger — visible when closed or while menu is closing */}
             <span
-              className={`absolute inset-0 flex flex-col items-center justify-center gap-1.5 transition-all duration-300 ease-out ${
+              className={`absolute inset-0 flex flex-col items-center justify-center gap-1 transition-all duration-300 ease-out ${
                 !mobileOpen || mobileClosing
                   ? 'opacity-100 rotate-0 scale-100'
                   : 'pointer-events-none opacity-0 scale-75 rotate-90'
               }`}
               aria-hidden={mobileOpen && !mobileClosing}
             >
-              <span className={`block w-5 h-0.5 rounded-full ${barStroke}`} />
-              <span className={`block w-5 h-0.5 rounded-full ${barStroke}`} />
-              <span className={`block w-5 h-0.5 rounded-full ${barStroke}`} />
+              <span className={`block w-4 h-0.5 rounded-full ${barStroke}`} />
+              <span className={`block w-4 h-0.5 rounded-full ${barStroke}`} />
+              <span className={`block w-4 h-0.5 rounded-full ${barStroke}`} />
             </span>
-            {/* Close — same stroke/size as hamburger bars (w-5 × h-0.5) */}
+            {/* Close — same stroke/size as hamburger bars */}
             <span
               className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out ${
                 mobileOpen && !mobileClosing
@@ -154,8 +154,8 @@ export default function NavBar({
               }`}
               aria-hidden={!mobileOpen || mobileClosing}
             >
-              <span className={`absolute block w-5 h-0.5 rounded-full rotate-45 ${barStroke}`} />
-              <span className={`absolute block w-5 h-0.5 rounded-full -rotate-45 ${barStroke}`} />
+              <span className={`absolute block w-4 h-0.5 rounded-full rotate-45 ${barStroke}`} />
+              <span className={`absolute block w-4 h-0.5 rounded-full -rotate-45 ${barStroke}`} />
             </span>
           </button>
 
