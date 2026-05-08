@@ -81,7 +81,7 @@ function doGet(e) {
         const raw     = String(row[0]).trim();
         const isPlus1 = raw.endsWith('+1');
         return {
-          name:         isPlus1 ? '+1' : displayName(row[0]),
+          name:         isPlus1 ? '+1' : displayName(row[0]).split(' ')[0],
           sheetName:    raw,      // sent back by the browser so doPost can match exactly
           isPlus1:      isPlus1,
           alreadyRsvpd: String(row[5]).trim() !== '',
