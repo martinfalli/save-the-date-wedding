@@ -152,7 +152,7 @@ export default function RSVPInfo({ language, isTextAnimating = false, inverted =
 
         {/* Info items */}
         <div
-          className={`flex-1 min-h-0 flex flex-col justify-start gap-8 pt-4 ${fadeUp}`}
+          className={`flex-1 min-h-0 overflow-y-auto flex flex-col justify-start gap-8 pt-4 pb-2 ${fadeUp}`}
           style={{ transitionDelay: visible ? '80ms' : '0ms' }}
         >
           {INFO_ITEMS.map((item, i) => (
