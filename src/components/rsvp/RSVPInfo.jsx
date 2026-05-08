@@ -4,13 +4,13 @@ import React, { useEffect, useRef, useState } from 'react';
 function renderLine(str, { links = [], colors = [], linkClass = '' } = {}) {
   // Split on {colors} first, then apply link replacements to each text segment
   const colorSwatches = colors.length
-    ? <span key="swatches" className="inline-flex items-center gap-1.5 align-middle mx-1">
+    ? <span key="swatches" className="inline-flex items-center gap-2 align-bottom mb-[-5px] mx-1">
         {colors.map(({ hex, label }) => (
           <span
             key={hex}
             title={label}
             style={{ backgroundColor: hex }}
-            className="inline-block w-4 h-4 rounded-full border border-black/15 shadow-sm"
+            className="inline-block w-5 h-5 rounded-full border border-black/15 shadow-sm"
           />
         ))}
       </span>
@@ -185,7 +185,7 @@ export default function RSVPInfo({ language, isTextAnimating = false, inverted =
                       return (
                         <p
                           key={j}
-                          className={`font-sans font-bold text-sm sm:text-base leading-relaxed ${
+                          className={`font-sans font-bold text-sm sm:text-base leading-relaxed text-center ${
                             inverted ? 'text-[#f5f0e8]/90' : 'text-brand-forest/90'
                           } ${langFade}`}
                         >
@@ -196,7 +196,7 @@ export default function RSVPInfo({ language, isTextAnimating = false, inverted =
                     {(() => {
                       const bullets = language === 'en' ? item.bulletsEn : item.bulletsBg;
                       return bullets?.length
-                        ? <p className={`font-sans font-bold text-sm sm:text-base leading-relaxed ${
+                        ? <p className={`font-sans font-bold text-sm sm:text-base leading-relaxed text-center ${
                             inverted ? 'text-[#f5f0e8]/90' : 'text-brand-forest/90'
                           } ${langFade}`}>
                             {bullets.join(', ')}
