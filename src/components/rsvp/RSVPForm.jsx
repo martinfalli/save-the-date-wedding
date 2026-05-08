@@ -184,7 +184,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
 
   const L = {
     title:              language === 'en' ? 'RSVP' : 'Покана',
-    deadline:           language === 'en' ? 'Deadline to respond: 1 June' : 'Краен срок за попълване: 1 Юни',
+    deadline:           language === 'en' ? 'Deadline to respond: June 1st' : 'Краен срок за попълване: 1 Юни',
     nameLabel:          language === 'en' ? 'Your name' : 'Твоето Име',
     namePlaceholder:    language === 'en' ? 'First name (+ surname if needed)' : 'Имe (+ фамилия, ако е нужно)',
     searchBtn:          language === 'en' ? 'Find' : 'Намери',
