@@ -368,7 +368,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
                       )}
                     </span>
                     <span className={`font-sans font-bold text-base ${inverted ? 'text-[#f5f0e8]' : 'text-brand-forest'}`}>
-                      {member.isPlus1 ? L.plus1Label : member.name.split(' ')[0]}
+                      {member.isPlus1 ? member.name : member.name.split(' ')[0]}
                     </span>
                     {member.alreadyRsvpd && (
                       <span className={`ml-auto text-xs font-semibold ${inverted ? 'text-[#f5f0e8]/50' : 'text-brand-forest/45'}`}>
@@ -398,7 +398,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
                   {member.attending && (
                     <div className="mt-2 ml-4 space-y-1.5 animate-fade-slide-in">
                       <p className={`text-xs font-semibold tracking-wide ${inverted ? 'text-[#f5f0e8]/65' : 'text-brand-forest/60'}`}>
-                        {L.vegLabel(member.isPlus1 ? (member.guestName.trim() || L.plus1Label) : member.name.split(' ')[0])}
+                        {L.vegLabel(member.isPlus1 ? (member.guestName.trim() || member.name) : member.name.split(' ')[0])}
                       </p>
                       <div className="flex gap-2">
                         {['yes', 'no'].map((val) => (
