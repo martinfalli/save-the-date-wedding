@@ -65,10 +65,13 @@ function doGet(e) {
       matchedRow = rows.find(function(row) {
         return cellVariants(row[0]).some(function(v) { return v === inputFull; });
       }) || null;
+      if (!matchedRow) {
+        return json({ found: false, reason: 'ambiguous' });
+      }
     }
 
     if (!matchedRow) {
-      return json({ found: false });
+      return json({ found: false, reason: 'notfound' });
     }
 
     const group = String(matchedRow[1]);

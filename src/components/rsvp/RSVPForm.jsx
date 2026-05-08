@@ -40,7 +40,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
 
   // Step 1 — name search
   const [nameInput, setNameInput] = useState('');
-  const [groupState, setGroupState] = useState('idle'); // 'idle'|'searching'|'found'|'notfound'|'error'
+  const [groupState, setGroupState] = useState('idle'); // 'idle'|'searching'|'found'|'notfound'|'ambiguous'|'error'
 
   // Step 2 — group members: [{ name, attending, vegetarian: null|'yes'|'no', alreadyRsvpd }]
   const [groupMembers, setGroupMembers] = useState([]);
@@ -79,7 +79,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
     try {
       const data = await fetchGroup(name);
       if (!data.found) {
-        setGroupState('notfound');
+        setGroupState(data.reason === 'ambiguous' ? 'ambiguous' : 'notfound');
         return;
       }
       const members = data.members.map((m) => ({
@@ -187,6 +187,9 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
     notFound:           language === 'en'
       ? 'Name not found. Check the spelling or contact us.'
       : 'Името не е намерено. Провери изписването или се свържи с нас.',
+    ambiguous:          language === 'en'
+      ? 'More than one person found with this name. Please add your surname.'
+      : 'Намерени са повече от едно такива имена. Моля, добави фамилия.',
     searchError:        language === 'en' ? 'Could not connect. Please try again.' : 'Грешка при свързване. Опитай отново.',
     whosComing:         language === 'en' ? 'Who is coming?' : 'Кой ще дойде?',
     plus1Label:         language === 'en' ? '+1 Guest' : 'Гост +1',
@@ -279,7 +282,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
                 value={nameInput}
                 onChange={(e) => {
                   setNameInput(e.target.value);
-                  if (groupState !== 'idle') { setGroupState('idle'); setGroupMembers([]); }
+                  if (groupState !== 'idle') { setGroupState('idle'); setGroupMembers([]); setSubmitError(null); }
                 }}
                 onKeyDown={handleNameKeyDown}
                 placeholder={L.namePlaceholder}
@@ -302,6 +305,9 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
             </div>
             {groupState === 'notfound' && (
               <p className="text-red-400 text-sm animate-fade-slide-in">{L.notFound}</p>
+            )}
+            {groupState === 'ambiguous' && (
+              <p className="text-amber-500 text-sm animate-fade-slide-in">{L.ambiguous}</p>
             )}
             {groupState === 'error' && (
               <p className="text-red-400 text-sm animate-fade-slide-in">{L.searchError}</p>

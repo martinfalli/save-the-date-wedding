@@ -1,44 +1,39 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-/** Renders a text string, replacing {colors} with swatches and link text with <a> elements. */
-function renderLine(str, { links = [], colors = [], linkClass = '' } = {}) {
-  // Split on {colors} first, then apply link replacements to each text segment
-  const colorSwatches = colors.length
-    ? <span key="swatches" className="inline-flex items-center gap-2 align-bottom mb-[-5px] mx-1">
-        {colors.map(({ hex, label }) => (
-          <span
-            key={hex}
-            title={label}
-            style={{ backgroundColor: hex }}
-            className="inline-block w-5 h-5 rounded-full border border-black/15 shadow-sm"
-          />
-        ))}
-      </span>
-    : null;
+/** Replaces link text with <a> elements inside a string. */
+function applyLinks(str, links = [], linkClass = '') {
+  if (!links.length) return str;
+  const parts = [];
+  let remaining = str;
+  links.forEach(({ text, href }) => {
+    const idx = remaining.indexOf(text);
+    if (idx === -1) return;
+    if (idx > 0) parts.push(remaining.slice(0, idx));
+    parts.push(
+      <a key={href} href={href} target="_blank" rel="noopener noreferrer" className={linkClass}>
+        {text}
+      </a>
+    );
+    remaining = remaining.slice(idx + text.length);
+  });
+  if (remaining) parts.push(remaining);
+  return parts.length ? parts : str;
+}
 
-  const applyLinks = (segment) => {
-    if (!links.length) return segment;
-    const parts = [];
-    let remaining = segment;
-    links.forEach(({ text, href }) => {
-      const idx = remaining.indexOf(text);
-      if (idx === -1) return;
-      if (idx > 0) parts.push(remaining.slice(0, idx));
-      parts.push(
-        <a key={href} href={href} target="_blank" rel="noopener noreferrer" className={linkClass}>
-          {text}
-        </a>
-      );
-      remaining = remaining.slice(idx + text.length);
-    });
-    if (remaining) parts.push(remaining);
-    return parts.length ? parts : segment;
-  };
-
-  if (!colorSwatches || !str.includes('{colors}')) return applyLinks(str);
-
-  const [before, after] = str.split('{colors}');
-  return [applyLinks(before), colorSwatches, applyLinks(after ?? '')];
+/** Color swatches rendered as a block row. */
+function ColorSwatches({ colors }) {
+  return (
+    <div className="flex gap-2 mt-1">
+      {colors.map(({ hex, label }) => (
+        <span
+          key={hex}
+          title={label}
+          style={{ backgroundColor: hex }}
+          className="inline-block w-5 h-5 rounded-full border border-black/15 shadow-sm"
+        />
+      ))}
+    </div>
+  );
 }
 
 const SNAP_H =
@@ -177,33 +172,37 @@ export default function RSVPInfo({ language, isTextAnimating = false, inverted =
                       <SparkleGlyph />
                     </p>
                   ))
-                : <>
-                    {(language === 'en' ? item.linesEn : item.linesBg).map((line, j) => {
-                      const linkClass = inverted
-                        ? 'underline underline-offset-2 hover:opacity-80'
-                        : 'underline underline-offset-2 hover:opacity-70';
-                      return (
-                        <p
-                          key={j}
-                          className={`font-sans font-bold text-sm sm:text-base leading-relaxed text-center ${
-                            inverted ? 'text-[#f5f0e8]/90' : 'text-brand-forest/90'
-                          } ${langFade}`}
-                        >
-                          {renderLine(line, { links: item.links || [], colors: item.colors || [], linkClass })}
-                        </p>
-                      );
-                    })}
-                    {(() => {
-                      const bullets = language === 'en' ? item.bulletsEn : item.bulletsBg;
-                      return bullets?.length
-                        ? <p className={`font-sans font-bold text-sm sm:text-base leading-relaxed text-center ${
-                            inverted ? 'text-[#f5f0e8]/90' : 'text-brand-forest/90'
-                          } ${langFade}`}>
-                            {bullets.join(', ')}
-                          </p>
-                        : null;
-                    })()}
-                  </>
+                : (() => {
+                    const lines   = language === 'en' ? item.linesEn : item.linesBg;
+                    const bullets = language === 'en' ? item.bulletsEn : item.bulletsBg;
+                    const links   = item.links || [];
+                    const colors  = item.colors || [];
+                    const linkClass = inverted
+                      ? 'underline underline-offset-2 hover:opacity-80'
+                      : 'underline underline-offset-2 hover:opacity-70';
+                    const pClass = `font-sans font-bold text-sm sm:text-base leading-relaxed text-center ${
+                      inverted ? 'text-[#f5f0e8]/90' : 'text-brand-forest/90'
+                    } ${langFade}`;
+                    return (
+                      <>
+                        {lines.map((line, j) => {
+                          const isLast   = j === lines.length - 1;
+                          const hasColor = line.includes('{colors}') && colors.length;
+                          const cleanLine = line.replace('{colors}', '').trimEnd();
+                          // Append bullets inline to the last paragraph
+                          const suffix = isLast && bullets?.length ? ' ' + bullets.join(', ') : '';
+                          return (
+                            <React.Fragment key={j}>
+                              <p className={pClass}>
+                                {applyLinks(cleanLine + suffix, links, linkClass)}
+                              </p>
+                              {hasColor && <ColorSwatches colors={colors} />}
+                            </React.Fragment>
+                          );
+                        })}
+                      </>
+                    );
+                  })()
               }
             </div>
           ))}
