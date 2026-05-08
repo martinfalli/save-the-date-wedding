@@ -23,7 +23,7 @@ function applyLinks(str, links = [], linkClass = '') {
 /** Color swatches rendered as a block row. */
 function ColorSwatches({ colors }) {
   return (
-    <div className="flex gap-2 mt-1">
+    <div className="flex justify-center gap-2 mt-1">
       {colors.map(({ hex, label }) => (
         <span
           key={hex}
