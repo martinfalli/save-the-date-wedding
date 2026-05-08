@@ -184,7 +184,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
 
   const L = {
     title:              language === 'en' ? 'RSVP' : 'Покана',
-    deadline:           language === 'en' ? 'Deadline to RSVP: 1 June' : 'Краен срок за попълване: 1 Юни',
+    deadline:           language === 'en' ? 'Deadline to respond: 1 June' : 'Краен срок за попълване: 1 Юни',
     nameLabel:          language === 'en' ? 'Your name' : 'Твоето Име',
     namePlaceholder:    language === 'en' ? 'First name (+ surname if needed)' : 'Имe (+ фамилия, ако е нужно)',
     searchBtn:          language === 'en' ? 'Find' : 'Намери',
@@ -203,7 +203,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
     vegLabel:           (name) => language === 'en' ? `${name} - Vegetarian menu?` : `${name} - Вегетарианско меню?`,
     yes:                language === 'en' ? 'Yes' : 'Да',
     no:                 language === 'en' ? 'No' : 'Не',
-    transportLabel:     language === 'en' ? 'How are you getting there?' : 'С какво превозно средство смятате да дойдете?',
+    transportLabel:     language === 'en' ? 'How do you plan on getting there?' : 'С какво превозно средство смятате да дойдете?',
     transportOpts:      language === 'en'
       ? [{ val: 'car', label: 'Car' }, { val: 'taxi', label: 'Taxi' }, { val: 'other', label: 'Other' }]
       : [{ val: 'car', label: 'Кола' }, { val: 'taxi', label: 'Такси' }, { val: 'other', label: 'Друг транспорт' }],
