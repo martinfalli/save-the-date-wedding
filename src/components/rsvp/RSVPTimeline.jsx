@@ -3,7 +3,7 @@ import timelineSvg from '../../assets/timeline.svg';
 import RsvpForestAsset from './RsvpForestAsset';
 
 const SNAP_H =
-  'min-h-[calc(100dvh-3.5rem)] h-[calc(100dvh-3.5rem)] max-h-[calc(100dvh-3.5rem)]';
+  'min-h-[calc(100dvh-var(--nav-h))] h-[calc(100dvh-var(--nav-h))] max-h-[calc(100dvh-var(--nav-h))]';
 
 export default function RSVPTimeline({ language, isTextAnimating = false, inverted = false }) {
   const ref = useRef(null);
@@ -22,6 +22,7 @@ export default function RSVPTimeline({ language, isTextAnimating = false, invert
 
   return (
     <div
+      id="rsvp-timeline"
       ref={ref}
       className={`rsvp-scroll-section ${SNAP_H} w-full px-3 py-2 sm:px-4 sm:py-3 !items-stretch !justify-start overflow-hidden`}
     >
@@ -52,7 +53,12 @@ export default function RSVPTimeline({ language, isTextAnimating = false, invert
           </div>
         </div>
 
-        <div className="shrink-0 flex flex-col items-center gap-4 pb-1 pt-0">
+        <button
+          type="button"
+          onClick={() => document.getElementById('rsvp-info')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+          className="shrink-0 flex flex-col items-center gap-4 pb-1 pt-0 focus:outline-none"
+          aria-label={language === 'en' ? 'Go to Information' : 'Към Информация'}
+        >
           <div className={`flex items-center gap-3 ${inverted ? 'text-[#f5f0e8]/80' : 'text-brand-forest/75'}`}>
             <span className={`block w-8 h-px ${inverted ? 'bg-[#f5f0e8]/60' : 'bg-brand-forest/55'}`} />
             <span
@@ -68,7 +74,7 @@ export default function RSVPTimeline({ language, isTextAnimating = false, invert
             <span className={`block w-0.5 h-5 rounded-full ${inverted ? 'bg-[#f5f0e8]/60' : 'bg-brand-forest/55'}`} />
             <span className={inverted ? 'text-[#f5f0e8]/75' : 'text-brand-forest/70'}>↓</span>
           </div>
-        </div>
+        </button>
       </div>
     </div>
   );

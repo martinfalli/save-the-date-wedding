@@ -208,7 +208,11 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
       ? [{ val: 'car', label: 'Car' }, { val: 'taxi', label: 'Taxi' }, { val: 'other', label: 'Other' }]
       : [{ val: 'car', label: 'Кола' }, { val: 'taxi', label: 'Такси' }, { val: 'other', label: 'Друг транспорт' }],
     songsLabel:         language === 'en' ? 'Song suggestions' : 'Предложения за песни',
-    songsPlaceholder:   language === 'en' ? 'Songs that will get you on the dancefloor…' : 'Песни, които искаш да чуеш 👀',
+    songsPlaceholder:   language === 'en'
+      ? 'Songs that will get you on the dancefloor…'
+      : groupMembers.filter((m) => m.attending).length > 1
+        ? 'Песни, които искате да чуете 👀'
+        : 'Песни, които искаш да чуеш 👀',
     messageLabel:       language === 'en'
       ? 'Anything else you want to tell us?'
       : groupMembers.filter((m) => m.attending).length > 1

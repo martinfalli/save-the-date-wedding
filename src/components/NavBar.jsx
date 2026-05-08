@@ -120,6 +120,7 @@ export default function NavBar({
       className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
         forestToolbar ? '' : 'backdrop-blur-sm'
       } ${navBg}`}
+      style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       aria-label="Main navigation"
     >
       <div className="relative max-w-5xl mx-auto h-14 min-w-0 pl-3 pr-[max(0.75rem,env(safe-area-inset-right))] sm:px-4 md:px-8 overflow-x-hidden">

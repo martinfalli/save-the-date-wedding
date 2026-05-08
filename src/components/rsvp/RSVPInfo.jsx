@@ -37,7 +37,7 @@ function ColorSwatches({ colors }) {
 }
 
 const SNAP_H =
-  'min-h-[calc(100dvh-3.5rem)] h-[calc(100dvh-3.5rem)] max-h-[calc(100dvh-3.5rem)]';
+  'min-h-[calc(100dvh-var(--nav-h))] h-[calc(100dvh-var(--nav-h))] max-h-[calc(100dvh-var(--nav-h))]';
 
 const SparkleGlyph = () => (
   <svg
@@ -130,6 +130,7 @@ export default function RSVPInfo({ language, isTextAnimating = false, inverted =
 
   return (
     <div
+      id="rsvp-info"
       ref={ref}
       className={`rsvp-scroll-section ${SNAP_H} w-full px-6 py-4 sm:px-8 !items-stretch !justify-start overflow-hidden`}
     >

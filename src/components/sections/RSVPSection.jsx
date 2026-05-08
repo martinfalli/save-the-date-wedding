@@ -23,9 +23,10 @@ export default function RSVPSection({ language, isTextAnimating, inverted, onTog
   return (
     <section
       id="rsvp"
-      className={`relative h-[calc(100dvh-3.5rem)] min-h-0 flex flex-col transition-colors duration-300 ${
+      className={`relative min-h-0 flex flex-col transition-colors duration-300 ${
         inverted ? 'bg-[#003625]' : 'bg-[#f5f0e8]'
       }`}
+      style={{ height: 'calc(100dvh - var(--nav-h))' }}
     >
       <RSVPStarsBackground scrollContainerRef={rsvpScrollRef} inverted={inverted} />
       <div ref={rsvpScrollRef} className="rsvp-scroll-container relative z-10 flex-1 min-h-0">

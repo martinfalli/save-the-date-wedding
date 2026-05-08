@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import logoSvg from '../../assets/logo.svg';
 import RsvpForestAsset from './RsvpForestAsset';
 
-const SNAP_H = 'min-h-[calc(100dvh-3.5rem)] h-[calc(100dvh-3.5rem)] max-h-[calc(100dvh-3.5rem)]';
+const SNAP_H = 'min-h-[calc(100dvh-var(--nav-h))] h-[calc(100dvh-var(--nav-h))] max-h-[calc(100dvh-var(--nav-h))]';
 
 export default function RSVPIntro({ language, isTextAnimating = false, inverted = false, onToggleInverted = () => {} }) {
   const ref = useRef(null);
@@ -90,9 +90,12 @@ export default function RSVPIntro({ language, isTextAnimating = false, inverted 
         <div className="flex-1 min-h-0" />
 
         {/* Scroll hint */}
-        <div
-          className={`shrink-0 flex flex-col items-center gap-4 pb-0.5 ${fadeUp}`}
+        <button
+          type="button"
+          onClick={() => document.getElementById('rsvp-timeline')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+          className={`shrink-0 flex flex-col items-center gap-4 pb-0.5 focus:outline-none ${fadeUp}`}
           style={{ transitionDelay: visible ? '160ms' : '0ms' }}
+          aria-label={language === 'en' ? 'Go to The Day' : 'Към Програма'}
         >
           <div className={`flex items-center gap-2 sm:gap-3 ${
             inverted ? 'text-[#f5f0e8]/80' : 'text-brand-forest/75'
@@ -110,7 +113,7 @@ export default function RSVPIntro({ language, isTextAnimating = false, inverted 
             <span className={`block w-0.5 h-3 sm:h-4 rounded-full ${inverted ? 'bg-[#f5f0e8]/60' : 'bg-brand-forest/55'}`} />
             <span className={inverted ? 'text-[#f5f0e8]/75 text-xs sm:text-sm' : 'text-brand-forest/70 text-xs sm:text-sm'}>↓</span>
           </div>
-        </div>
+        </button>
       </div>
     </div>
   );

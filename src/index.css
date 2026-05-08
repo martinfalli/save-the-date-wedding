@@ -34,6 +34,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Total navbar height = fixed bar (3.5rem) + iOS safe-area top inset */
+  --nav-h: calc(3.5rem + env(safe-area-inset-top, 0px));
+}
+
 html {
   background-color: #f5f0e8;
   scroll-behavior: smooth;
@@ -76,7 +81,7 @@ body {
   scroll-snap-align: start;
   /* "always" can feel stuck when reversing scroll direction */
   scroll-snap-stop: normal;
-  min-height: calc(100dvh - 3.5rem);
+  min-height: calc(100dvh - var(--nav-h));
   flex-shrink: 0;
   box-sizing: border-box;
   display: flex;

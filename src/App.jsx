@@ -82,7 +82,7 @@ function App() {
       />
 
       {/* RSVP is the landing content */}
-      <main className="pt-14">
+      <main style={{ paddingTop: 'var(--nav-h)' }}>
         <RSVPSection
           language={language}
           isTextAnimating={isTextAnimating}
@@ -94,9 +94,10 @@ function App() {
       {/* Save the Date overlay — sits below the sticky navbar */}
       {(showSaveTheDate || isClosingSaveTheDate) && (
         <div
-          className={`fixed top-14 inset-x-0 bottom-0 z-40 ${
+          className={`fixed inset-x-0 bottom-0 z-40 ${
             isClosingSaveTheDate ? 'animate-fadeOutScale' : 'animate-fadeInScale'
           }`}
+          style={{ top: 'var(--nav-h)' }}
         >
           <SaveTheDateSection
             language={language}
