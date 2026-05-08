@@ -209,9 +209,12 @@ export default function RSVPInfo({ language, isTextAnimating = false, inverted =
         </div>
 
         {/* Scroll hint */}
-        <div
-          className={`shrink-0 flex flex-col items-center gap-4 pb-0.5 ${fadeUp}`}
+        <button
+          type="button"
+          onClick={() => document.getElementById('rsvp-form-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+          className={`shrink-0 flex flex-col items-center gap-4 pb-0.5 cursor-pointer focus:outline-none ${fadeUp}`}
           style={{ transitionDelay: visible ? '160ms' : '0ms' }}
+          aria-label={language === 'en' ? 'Go to RSVP' : 'Към Покана'}
         >
           <div className={`flex items-center gap-2 sm:gap-3 ${
             inverted ? 'text-[#f5f0e8]/80' : 'text-brand-forest/75'
@@ -229,7 +232,7 @@ export default function RSVPInfo({ language, isTextAnimating = false, inverted =
             <span className={`block w-0.5 h-3 sm:h-4 rounded-full ${inverted ? 'bg-[#f5f0e8]/60' : 'bg-brand-forest/55'}`} />
             <span className={inverted ? 'text-[#f5f0e8]/75 text-xs sm:text-sm' : 'text-brand-forest/70 text-xs sm:text-sm'}>↓</span>
           </div>
-        </div>
+        </button>
 
       </div>
     </div>

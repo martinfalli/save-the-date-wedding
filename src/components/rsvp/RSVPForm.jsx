@@ -35,6 +35,7 @@ async function fetchGroup(name) {
 
 export default function RSVPForm({ language, isTextAnimating = false, onSuccess, inverted = false }) {
   const ref = useRef(null);
+  const scrollRef = useRef(null);
   const [visible, setVisible] = useState(false);
   const toastTimer = useRef(null);
 
@@ -93,6 +94,10 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
       }));
       setGroupMembers(members);
       setGroupState('found');
+      // Scroll inner container back to top so the title stays visible
+      requestAnimationFrame(() => {
+        if (scrollRef.current) scrollRef.current.scrollTop = 0;
+      });
       if (members.some((m) => m.alreadyRsvpd)) {
         showToast(
           language === 'en'
@@ -179,7 +184,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
 
   const L = {
     title:              language === 'en' ? 'RSVP' : 'Покана',
-    deadline:           language === 'en' ? 'Deadline to RSVP: 1 June' : 'Краен срок за попълване: 7 Юни',
+    deadline:           language === 'en' ? 'Deadline to RSVP: 1 June' : 'Краен срок за попълване: 1 Юни',
     nameLabel:          language === 'en' ? 'Your name' : 'Твоето Име',
     namePlaceholder:    language === 'en' ? 'First name (+ surname if needed)' : 'Имe (+ фамилия, ако е нужно)',
     searchBtn:          language === 'en' ? 'Find' : 'Намери',
@@ -204,7 +209,11 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
       : [{ val: 'car', label: 'Кола' }, { val: 'taxi', label: 'Такси' }, { val: 'other', label: 'Друг транспорт' }],
     songsLabel:         language === 'en' ? 'Song suggestions' : 'Предложения за песни',
     songsPlaceholder:   language === 'en' ? 'Songs that will get you on the dancefloor…' : 'Песни, които искаш да чуеш 👀',
-    messageLabel:       language === 'en' ? 'Anything else you want to tell us?' : 'Искаш ли да ни кажеш още нещо?',
+    messageLabel:       language === 'en'
+      ? 'Anything else you want to tell us?'
+      : groupMembers.filter((m) => m.attending).length > 1
+        ? 'Искате ли да ни кажете още нещо?'
+        : 'Искаш ли да ни кажеш още нещо?',
     messagePlaceholder: language === 'en' ? 'Wishes, thoughts, anything…' : 'Мисли, препоръки или нещо друго…',
     submit:             language === 'en' ? 'Send' : 'Изпрати',
     submitting:         language === 'en' ? 'Sending…' : 'Изпращане…',
@@ -224,10 +233,12 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
 
   return (
     <div
+      id="rsvp-form-panel"
       ref={ref}
       className="rsvp-scroll-section px-4 py-3 !items-stretch !justify-start w-full flex flex-col min-h-0"
     >
       <div
+        ref={scrollRef}
         className={`w-full max-w-lg mx-auto min-h-0 flex-1 overflow-y-auto py-2 flex flex-col transition-all duration-700 ease-out ${
           visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}
@@ -353,7 +364,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
                       )}
                     </span>
                     <span className={`font-sans font-bold text-base ${inverted ? 'text-[#f5f0e8]' : 'text-brand-forest'}`}>
-                      {member.isPlus1 ? L.plus1Label : member.name}
+                      {member.isPlus1 ? L.plus1Label : member.name.split(' ')[0]}
                     </span>
                     {member.alreadyRsvpd && (
                       <span className={`ml-auto text-xs font-semibold ${inverted ? 'text-[#f5f0e8]/50' : 'text-brand-forest/45'}`}>
@@ -383,7 +394,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
                   {member.attending && (
                     <div className="mt-2 ml-4 space-y-1.5 animate-fade-slide-in">
                       <p className={`text-xs font-semibold tracking-wide ${inverted ? 'text-[#f5f0e8]/65' : 'text-brand-forest/60'}`}>
-                        {L.vegLabel(member.isPlus1 ? (member.guestName.trim() || L.plus1Label) : member.name)}
+                        {L.vegLabel(member.isPlus1 ? (member.guestName.trim() || L.plus1Label) : member.name.split(' ')[0])}
                       </p>
                       <div className="flex gap-2">
                         {['yes', 'no'].map((val) => (
