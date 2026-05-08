@@ -35,21 +35,9 @@ export default function RSVPSuccess({ id, language, isTextAnimating = false, sub
             inverted ? 'text-[#f5f0e8]' : 'text-brand-forest'
           } ${langFade}`}
         >
-          {language === 'en' ? 'See you there!' : 'До скоро!'}
+          {language === 'en' ? 'Thank you and see you there!' : 'Благодарим и до скоро!'}
         </h2>
 
-        {firstName && (
-          <p
-            key={`success-thanks-${language}`}
-            className={`text-xl md:text-2xl font-semibold ${
-              inverted ? 'text-[#f5f0e8]/95' : 'text-brand-forest/90'
-            } ${langFade}`}
-          >
-            {language === 'en'
-              ? `Thank you, ${firstName}!`
-              : `Благодарим ти, ${firstName}!`}
-          </p>
-        )}
 
         <p
           key={`success-body-${language}`}

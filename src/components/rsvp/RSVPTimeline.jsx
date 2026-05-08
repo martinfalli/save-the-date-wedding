@@ -40,12 +40,14 @@ export default function RSVPTimeline({ language, isTextAnimating = false, invert
         </h2>
 
         <div className="flex min-h-0 flex-1 w-full items-center justify-center overflow-hidden py-1">
-          <div className="flex h-full w-full max-w-full items-center justify-center overflow-hidden">
+          <div
+            className="flex h-full w-full max-w-full items-center justify-center overflow-hidden timeline-svg-scaled"
+          >
             <RsvpForestAsset
               src={timelineSvg}
               inverted={inverted}
               invertedMode="filter"
-              className="h-auto w-auto max-h-[min(76vh,920px)] max-w-[min(98vw,42rem)] object-contain object-center timeline-svg-scaled md:max-h-[min(86vh,1100px)] md:max-w-[min(92vw,88rem)]"
+              className="h-auto w-auto max-h-[min(76vh,920px)] max-w-[min(98vw,42rem)] object-contain object-center md:max-h-[min(86vh,1100px)] md:max-w-[min(92vw,88rem)]"
             />
           </div>
         </div>
@@ -57,7 +59,7 @@ export default function RSVPTimeline({ language, isTextAnimating = false, invert
               key={`timeline-next-${language}`}
               className={`text-[11px] sm:text-sm font-bold font-sans tracking-widest uppercase ${langFade}`}
             >
-              {language === 'en' ? 'Questions' : 'Въпроси'}
+              {language === 'en' ? 'Information' : 'Информация'}
             </span>
             <span className={`block w-8 h-px ${inverted ? 'bg-[#f5f0e8]/60' : 'bg-brand-forest/55'}`} />
           </div>

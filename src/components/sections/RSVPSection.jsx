@@ -3,6 +3,7 @@ import RSVPIntro from '../rsvp/RSVPIntro';
 import RSVPTimeline from '../rsvp/RSVPTimeline';
 import RSVPForm from '../rsvp/RSVPForm';
 import RSVPSuccess from '../rsvp/RSVPSuccess';
+import RSVPInfo from '../rsvp/RSVPInfo';
 import RSVPStarsBackground from '../rsvp/RSVPStarsBackground';
 
 export default function RSVPSection({ language, isTextAnimating, inverted, onToggleInverted }) {
@@ -35,6 +36,7 @@ export default function RSVPSection({ language, isTextAnimating, inverted, onTog
           onToggleInverted={onToggleInverted}
         />
         <RSVPTimeline language={language} isTextAnimating={isTextAnimating} inverted={inverted} />
+        <RSVPInfo language={language} isTextAnimating={isTextAnimating} inverted={inverted} />
 
         {!submitted ? (
           <RSVPForm
