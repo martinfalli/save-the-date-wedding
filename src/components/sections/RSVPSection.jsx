@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { scrollRsvpTo } from '../../utils/scrollRsvp';
 import RSVPIntro from '../rsvp/RSVPIntro';
 import RSVPTimeline from '../rsvp/RSVPTimeline';
 import RSVPForm from '../rsvp/RSVPForm';
@@ -14,18 +15,12 @@ export default function RSVPSection({ language, isTextAnimating, inverted, onTog
   const handleSuccess = (name) => {
     setSubmitterName(name);
     setSubmitted(true);
-    setTimeout(() => {
-      const el = document.getElementById('rsvp-success');
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+    setTimeout(() => scrollRsvpTo('rsvp-success'), 100);
   };
 
   const handleEdit = () => {
     setSubmitted(false);
-    setTimeout(() => {
-      const el = document.getElementById('rsvp-form-panel');
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 50);
+    setTimeout(() => scrollRsvpTo('rsvp-form-panel'), 50);
   };
 
   return (

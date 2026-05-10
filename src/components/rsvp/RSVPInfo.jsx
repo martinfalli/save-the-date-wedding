@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { scrollRsvpTo } from '../../utils/scrollRsvp';
 
 /** Replaces link text with <a> elements inside a string. */
 function applyLinks(str, links = [], linkClass = '') {
@@ -212,7 +213,7 @@ export default function RSVPInfo({ language, isTextAnimating = false, inverted =
         {/* Scroll hint */}
         <button
           type="button"
-          onClick={() => document.getElementById('rsvp-form-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+          onClick={() => scrollRsvpTo('rsvp-form-panel')}
           className={`shrink-0 flex flex-col items-center gap-4 pb-0.5 cursor-pointer focus:outline-none ${fadeUp}`}
           style={{ transitionDelay: visible ? '160ms' : '0ms' }}
           aria-label={language === 'en' ? 'Go to RSVP' : 'Към Покана'}

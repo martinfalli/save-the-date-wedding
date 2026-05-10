@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import logoSvg from '../../assets/logo.svg';
 import RsvpForestAsset from './RsvpForestAsset';
+import { scrollRsvpTo } from '../../utils/scrollRsvp';
 
 const SNAP_H = 'min-h-[calc(100dvh-var(--nav-h))] h-[calc(100dvh-var(--nav-h))] max-h-[calc(100dvh-var(--nav-h))]';
 
@@ -92,7 +93,7 @@ export default function RSVPIntro({ language, isTextAnimating = false, inverted 
         {/* Scroll hint */}
         <button
           type="button"
-          onClick={() => document.getElementById('rsvp-timeline')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+          onClick={() => scrollRsvpTo('rsvp-timeline')}
           className={`shrink-0 flex flex-col items-center gap-4 pb-0.5 focus:outline-none ${fadeUp}`}
           style={{ transitionDelay: visible ? '160ms' : '0ms' }}
           aria-label={language === 'en' ? 'Go to The Day' : 'Към Програма'}
