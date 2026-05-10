@@ -10,7 +10,9 @@ function App() {
   const [isTextAnimating, setIsTextAnimating] = useState(false);
   const [showSaveTheDate, setShowSaveTheDate] = useState(false);
   const [isClosingSaveTheDate, setIsClosingSaveTheDate] = useState(false);
-  const [rsvpInverted, setRsvpInverted] = useState(false);
+  const [rsvpInverted, setRsvpInverted] = useState(
+    () => window.matchMedia('(prefers-color-scheme: dark)').matches
+  );
 
   const saveTheDateLightOpen =
     (showSaveTheDate || isClosingSaveTheDate) && !isDarkMode;
