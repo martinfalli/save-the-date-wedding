@@ -221,6 +221,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
     messagePlaceholder: language === 'en' ? 'Wishes, thoughts, anything…' : 'Мисли, препоръки или нещо друго…',
     submit:             language === 'en' ? 'Send' : 'Изпрати',
     submitting:         language === 'en' ? 'Sending…' : 'Изпращане…',
+    submitHint:         language === 'en' ? '*You can change your answers after submitting' : '*Може да промените отговорите си и след изпращане',
   };
 
   const langFade   = isTextAnimating ? 'animate-fade-text-out' : 'animate-fade-text-in';
@@ -469,6 +470,14 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
                 </p>
               )}
 
+              <div className="-mt-2 space-y-3">
+                <p
+                  key={`submit-hint-${language}`}
+                  className={`text-center text-sm opacity-50 ${inverted ? 'text-[#f5f0e8]' : 'text-[#003625]'} ${langFade}`}
+                >
+                  {L.submitHint}
+                </p>
+
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -493,6 +502,7 @@ export default function RSVPForm({ language, isTextAnimating = false, onSuccess,
                   <span key={`submit-${language}`} className={langFade}>{L.submit}</span>
                 )}
               </button>
+              </div>
             </>
           )}
         </form>
