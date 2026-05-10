@@ -43,6 +43,10 @@ function App() {
     }
   }, [isDarkMode, rsvpInverted, saveTheDateLightOpen]);
 
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
   const handleToggleLanguage = () => {
     setIsTextAnimating(true);
     setTimeout(() => {

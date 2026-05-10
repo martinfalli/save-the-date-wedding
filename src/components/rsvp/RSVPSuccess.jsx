@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 /** Same snap height as intro / timeline so the panel fills the viewport */
 const SNAP_H =
-  'min-h-[calc(100dvh-3.5rem)] h-[calc(100dvh-3.5rem)] max-h-[calc(100dvh-3.5rem)]';
+  'min-h-[calc(100dvh-var(--nav-h))] h-[calc(100dvh-var(--nav-h))] max-h-[calc(100dvh-var(--nav-h))]';
 
-export default function RSVPSuccess({ id, language, isTextAnimating = false, submitterName, inverted = false }) {
+export default function RSVPSuccess({ id, language, isTextAnimating = false, submitterName, inverted = false, onEdit }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -55,6 +55,19 @@ export default function RSVPSuccess({ id, language, isTextAnimating = false, sub
           <span className="text-2xl leading-none">❤️</span>
           <span className="text-2xl leading-none">❤️</span>
         </div>
+
+        {onEdit && (
+          <button
+            key={`edit-btn-${language}`}
+            type="button"
+            onClick={onEdit}
+            className={`text-sm font-semibold underline underline-offset-2 opacity-50 hover:opacity-80 transition-opacity duration-150 ${
+              inverted ? 'text-[#f5f0e8]' : 'text-brand-forest'
+            } ${langFade}`}
+          >
+            {language === 'en' ? 'Edit response' : 'Промени отговора'}
+          </button>
+        )}
 
         <div
           className={`mt-2 border rounded-2xl px-8 py-5 backdrop-blur-sm space-y-1 ${

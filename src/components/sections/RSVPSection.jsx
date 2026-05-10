@@ -20,6 +20,14 @@ export default function RSVPSection({ language, isTextAnimating, inverted, onTog
     }, 100);
   };
 
+  const handleEdit = () => {
+    setSubmitted(false);
+    setTimeout(() => {
+      const el = document.getElementById('rsvp-form-panel');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  };
+
   return (
     <section
       id="rsvp"
@@ -53,6 +61,7 @@ export default function RSVPSection({ language, isTextAnimating, inverted, onTog
             isTextAnimating={isTextAnimating}
             submitterName={submitterName}
             inverted={inverted}
+            onEdit={handleEdit}
           />
         )}
       </div>
