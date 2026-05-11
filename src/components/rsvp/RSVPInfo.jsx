@@ -81,7 +81,8 @@ const INFO_ITEMS = [
       { hex: '#A8B5A2', label: 'Sage Green' },
       { hex: '#243447', label: 'Dark Navy' },
       { hex: '#DCCDB8', label: 'Beige' },
-      { hex: '#EFE6D8', label: 'Champagne' },
+      { hex: '#C65D3B', label: 'Terracotta' },
+      { hex: '#C8A2C8', label: 'Lilac' },
     ],
   },
   {
